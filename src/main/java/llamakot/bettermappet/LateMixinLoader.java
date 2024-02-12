@@ -10,6 +10,7 @@ public class LateMixinLoader implements ILateMixinLoader {
     @Override
     public List<String> getMixinConfigs() {
         return new ArrayList<String>(Arrays.asList(
+                "mixins/mixins.late.json"
         ));
     }
 }

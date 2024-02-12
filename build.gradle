@@ -43,7 +43,7 @@ def mixins = new ArrayList<>(Arrays.asList(
 ))
 
 def mixinFiles = new ArrayList<>(Arrays.asList(
-        //'mixins/mixins.late.main.json',
+        'mixins/mixins.late.json'
 ))
 
 mixinFiles.forEach {
@@ -144,46 +144,10 @@ jar {
                 "Implementation-Version"     : project.version,
                 "Implementation-Timestamp"   : new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
                 "TweakClass"                 : "org.spongepowered.asm.launch.MixinTweaker",
-                "MixinConfigs"               : mixinFiles.stream().filter { it.contains("early") }.collect(Collectors.joining(",")),
                 "FMLCorePluginContainsFMLMod": true,  // Не забываем указать эти два флага,
                 "ForceLoadAsMod"             : true, // чтобы Forge нормально загрузил и мод, и миксины
         ])
     }
-}
-
-// Example configuration to allow publishing using the maven-publish task
-// This is the preferred method to reobfuscate your jar file
-//jar.finalizedBy('shadowJar')
-jar.finalizedBy('reobfJar')
-// However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
-//publish.dependsOn('reobfJar')
-
-
-// BY DYAMO BOLSHOY UMNI MALCHEG
-
-import org.apache.tools.ant.filters.ReplaceTokens
-
-import java.util.stream.Collectors
-
-task processSource(type: Sync) {
-    from sourceSets.main.java
-    filter(ReplaceTokens, tokens: [
-            MAPPET     : mappet,
-            MCLIB      : mclib,
-            VERSION    : version,
-            MIXINBOOTER: mixinbooter
-    ])
-    into "$buildDir/src"
-}
-
-compileJava {
-    source = processSource.outputs
-}
-
-shadowJar {
-    dependencies {
-    }
-    archiveClassifier.set("")
 }
 
 task prepareAssets(type: Copy) {
@@ -227,26 +191,6 @@ artifacts {
     archives sourcesJar
 }
 
-task scriptingJavadocs(type: Javadoc) {
-    source = sourceSets.main.allJava
-
-    include "mchorse/mappet/api/ui/components/**"
-    include "mchorse/mappet/client/gui/utils/graphics/Graphic**"
-    include "mchorse/mappet/api/scripts/user/**"
-}
-
-// task for my symlink
-task multiMC(type: Copy){
-    System.out.println("build/libs/${archivesBaseName}-${version}.jar")
-    from "build/libs/${archivesBaseName}-${version}.jar"
-    into 'build/libs/'
-    rename { String fileName ->
-        fileName.replace("-${version}", "-multiMC")
-    }
-}
-
-jar.finalizedBy(multiMC)
-/* Comparing keys */
 task compareLangFiles {
     doLast {
         def help = file("src/main/resources/assets/${project.archivesBaseName}/lang/")
@@ -371,34 +315,5 @@ task copyLangStrings {
         }
 
         print("Done!")
-    }
-}
-
-task setIncludeProvidedOption {
-    inputs.property "date", new Date()
-
-    doLast {
-        includeProvidedOption("Client")
-        includeProvidedOption("Server")
-    }
-}
-
-def includeProvidedOption(String configuration) {
-    // Fuck groovy!
-    def runConfigPath = ".idea/runConfigurations/run" + configuration + ".xml"
-    def xml = new XmlParser(false, true).parse(file(runConfigPath))
-    def toAdd = new XmlParser(false, true).parseText("<option name=\"INCLUDE_PROVIDED_SCOPE\" value=\"true\" />")
-    def children = xml.find { it.name() == "configuration" }.children()
-    if (children.find { it.name() == "option" && it.attribute("name") == "INCLUDE_PROVIDED_SCOPE" } != null) {
-        return
-    }
-    children.add(0, toAdd)
-
-    new XmlNodePrinter(new PrintWriter(new FileWriter(runConfigPath))).print(xml)
-}
-
-tasks.configureEach { task ->
-    if (task.name.contains("genIntellijRuns")) {
-        task.finalizedBy setIncludeProvidedOption
     }
 }
