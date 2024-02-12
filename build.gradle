@@ -234,10 +234,6 @@ task scriptingJavadocs(type: Javadoc) {
     include "mchorse/mappet/client/gui/utils/graphics/Graphic**"
     include "mchorse/mappet/api/scripts/user/**"
 }
-//Dyamo glupiy malcheg
-import org.apache.tools.ant.taskdefs.condition.Os
-
-tasks.processResources.dependsOn(scriptingJavadocsJson)
 
 // task for my symlink
 task multiMC(type: Copy){
