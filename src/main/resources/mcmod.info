@@ -1,0 +1,22 @@
+[{
+  "modid": "bettermappet",
+  "name": "BetterMappet",
+  "description": "Addon that contains many useful features for Mappet",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://github.com/Erfram/BetterMappet",
+  "authorList": [
+    "Llama",
+    "MrKot"
+  ],
+  "credits": "Special thanks to TorayLife for helping and supporting!",
+  "logoFile": "logo.png",
+  "useDependencyInformation": true,
+  "requiredMods": [
+    "mappet",
+    "mixinbooter"
+  ],
+  "dependencies": [
+    "mappet"
+  ]
+}]
