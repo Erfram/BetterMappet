@@ -48,8 +48,6 @@ public class BetterMappet {
     @SubscribeEvent
     public void onConfigRegister(RegisterConfigEvent event) {
         ConfigBuilder builder = event.createBuilder(MOD_ID);
-
-        directory = builder.getString("directory", "directoryText");
     }
 
     @Mod.EventHandler

@@ -43,7 +43,7 @@ def mixins = new ArrayList<>(Arrays.asList(
 ))
 
 def mixinFiles = new ArrayList<>(Arrays.asList(
-        'mixins/mixins.late.json'
+    'mixins/mixins.late.json'
 ))
 
 mixinFiles.forEach {
