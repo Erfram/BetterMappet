@@ -1,0 +1,4 @@
+#PARSE_ESCAPES
+mappet.gui.settings.triggers.player_mouse=Игрок: при использовании мыши
+mappet.gui.settings.triggers.descriptions.player_mouse=Этот триггер срабатывает, когда игрок использует мышь.
+mappet.gui.settings.triggers.variables.player_mouse=§6button§r, ID кнопки мыши.\n§6x§r, x координата.\n§6y§r, y координата.\n§6dwheel§r, значение прокрутки колесика мыши.\n§6dx§r, Смещение прокрутки по оси X.\n§6dy§r, Смещение прокрутки по оси Y.

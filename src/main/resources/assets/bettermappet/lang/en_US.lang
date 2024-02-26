@@ -1,0 +1,4 @@
+#PARSE_ESCAPES
+mappet.gui.settings.triggers.player_mouse=Player: when using a mouse
+mappet.gui.settings.triggers.descriptions.player_mouse=This trigger fires when the player uses the mouse.
+mappet.gui.settings.triggers.variables.player_mouse=§6button§r, mouse button ID.\n§6x§r, x coordinate.\n§6y§r, y coordinate.\n§6dwheel§r, mouse wheel scroll value.\n§6dx§r, X scroll offset.\n§6dy§r, Y scroll offset.
