@@ -79,7 +79,10 @@ public class PacketDownloadToClient implements IMessage {
                         is.close();
                         break;
                     case SERVER_TO_CLIENT:
-                        path.getParent().toFile().mkdirs();
+                        if (!Files.exists(path.getParent())) {
+                            Files.createDirectories(path.getParent());
+                        }
+                        //path.getParent().toFile().mkdirs();
                         Files.write(path, fileBytes);
                 }
             } catch (IOException e) {
