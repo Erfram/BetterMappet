@@ -19,7 +19,7 @@ apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: "org.spongepowered.mixin"
 
 group = 'llamakot.bettermappet'
-archivesBaseName = "betterMappet"
+archivesBaseName = "BetterMappet"
 sourceCompatibility = targetCompatibility = "1.8"
 compileJava.options.encoding = 'UTF-8'
 
