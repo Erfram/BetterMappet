@@ -42,6 +42,10 @@ public class PacketEvent implements IMessage {
             switch (accessType) {
                 case MOUSE:
                     CommonProxy.eventTriggerHandler.onMouseEvent(data, entityPlayerMP);
+                    break;
+                case CAMERA:
+                    CommonProxy.eventTriggerHandler.onCameraEvent(entityPlayerMP);
+                    break;
             }
         }
     }

@@ -1,4 +1,17 @@
 #PARSE_ESCAPES
+
+## TRIGGERS
+
+# ИГРОК
 mappet.gui.settings.triggers.player_mouse=Игрок: при использовании мыши
 mappet.gui.settings.triggers.descriptions.player_mouse=Этот триггер срабатывает, когда игрок использует мышь.
-mappet.gui.settings.triggers.variables.player_mouse=§6button§r, ID кнопки мыши.\n§6x§r, x координата.\n§6y§r, y координата.\n§6dwheel§r, значение прокрутки колесика мыши.\n§6dx§r, Смещение прокрутки по оси X.\n§6dy§r, Смещение прокрутки по оси Y.
+mappet.gui.settings.triggers.variables.player_mouse=§6button§r, ID кнопки мыши.\n§6x§r, x координата.\n§6y§r, y координата.\n§6dwheel§r, значение прокрутки колесика мыши.\n§6dx§r, смещение прокрутки по оси X.\n§6dy§r, смещение прокрутки по оси Y.\n§6buttonState§r, состояние мыши.
+
+mappet.gui.settings.triggers.player_camera=Игрок: при использовании камеры
+mappet.gui.settings.triggers.descriptions.player_camera=Этот триггер срабатывает, когда используется камера.
+mappet.gui.settings.triggers.variables.player_camera=§6rotate§r, (§8ScriptVectorAngle§r) вектор значений поворота.\n§6scale§r, (§8ScriptVector§r) вектор значений увеличения.\n§6canceled§r, отменен ли триггер.
+
+# КОМАНДА
+mappet.gui.settings.triggers.command=Команда: при выполнении
+mappet.gui.settings.triggers.descriptions.command=Этот отменяемый триггер срабатывает перед выполнением команды.
+mappet.gui.settings.triggers.variables.command=§6command§r, название команды.\n§6sender§r, отправитель команды.\n§6parameters§r, (§8String[]§r) список параметров команды.

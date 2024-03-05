@@ -1,4 +1,18 @@
 #PARSE_ESCAPES
+
+## TRIGGERS
+
+# PLAYER
 mappet.gui.settings.triggers.player_mouse=Player: when using a mouse
 mappet.gui.settings.triggers.descriptions.player_mouse=This trigger fires when the player uses the mouse.
-mappet.gui.settings.triggers.variables.player_mouse=§6button§r, mouse button ID.\n§6x§r, x coordinate.\n§6y§r, y coordinate.\n§6dwheel§r, mouse wheel scroll value.\n§6dx§r, X scroll offset.\n§6dy§r, Y scroll offset.
+mappet.gui.settings.triggers.variables.player_mouse=§6button§r, mouse button ID.\n§6x§r, x coordinate.\n§6y§r, y coordinate.\n§6dwheel§r, mouse wheel scroll value.\n§6dx§r, X scroll offset.\n§6dy§r, Y scroll offset.\n§6buttonState§r, Mouse status.
+
+mappet.gui.settings.triggers.player_camera=Player: when using the camera
+mappet.gui.settings.triggers.descriptions.player_camera=This trigger fires when the camera is in use.
+mappet.gui.settings.triggers.variables.player_camera=§6rotate§r, (§8ScriptVectorAngle§r) vector of rotation values.\n§6scale§r, (§8ScriptVector§r) vector of enlargement values.\n§6canceled§r, whether the trigger is canceled.
+
+# COMMAND
+mappet.gui.settings.triggers.command=Command: when executing command
+mappet.gui.settings.triggers.descriptions.command=This cancelable trigger fires, before the command is executed.
+mappet.gui.settings.triggers.variables.command=§6command§r, command name.\n§6sender§r, command sender.\n§6parameters§r, (§8String[]§r) command parameter list.
+

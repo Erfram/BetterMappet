@@ -8,6 +8,7 @@ import mchorse.mclib.network.ClientMessageHandler;
 import mchorse.mclib.network.ServerMessageHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -68,12 +69,21 @@ public class PacketDownloadToClient implements IMessage {
             AccessType type = message.type;
             String url = message.url;
 
+            if(url.contains("drive.google.com")) {
+                url = url.replace("file/d/", "uc?id=").replace("/view?usp=sharing", "&export=download");
+            }
+
+            if(url.contains("dropbox.com")) {
+                url = url.replace("www.dropbox.com", "dl.dropboxusercontent.com");
+            }
+
+            GuiScreen.setClipboardString(url);
+
             try {
                 switch (type) {
                     case URL:
                         InputStream is = new URL(url).openStream();
 
-                        // сохраняем изображение на диск
                         Files.copy(is, path);
 
                         is.close();
@@ -82,7 +92,6 @@ public class PacketDownloadToClient implements IMessage {
                         if (!Files.exists(path.getParent())) {
                             Files.createDirectories(path.getParent());
                         }
-                        //path.getParent().toFile().mkdirs();
                         Files.write(path, fileBytes);
                 }
             } catch (IOException e) {

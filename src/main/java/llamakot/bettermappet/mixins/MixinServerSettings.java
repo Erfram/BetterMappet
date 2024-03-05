@@ -19,15 +19,26 @@ public abstract class MixinServerSettings implements TriggerAccessor {
     public abstract Trigger register(String key, String alias, Trigger trigger);
 
     public Trigger playerMouse;
+    public Trigger command;
+    public Trigger playerCamera;
 
     public Trigger getPlayerMouse(){
         return this.playerMouse;
     }
 
+    public Trigger getCommand(){
+        return this.command;
+    }
+
+    public Trigger getPlayerCamera(){
+        return this.playerCamera;
+    }
+
     @Inject(method = "<init>", at = @At("TAIL"), remap = false)
     public void constructor(File file, CallbackInfo ci) {
         this.playerMouse = this.register("player_mouse", "player_mouse", new Trigger());
-
+        this.command = this.register("command", "command", new Trigger());
+        this.playerCamera = this.register("player_camera", "player_camera", new Trigger());
 
         Mappet.EVENT_BUS.post(new RegisterServerTriggerEvent((ServerSettings) (Object) this));
     }

@@ -6,8 +6,9 @@
   "priority": 1,
   "mixinPriority": 100,
   "mixins": [
-    "MixinScriptPlayer",
-    "MixinServerSettings"
+    "MixinServerSettings",
+    "scripts.code.MixinScriptFactory",
+    "scripts.code.MixinScriptPlayer"
   ],
   "client": [
   ],
