@@ -1,7 +1,6 @@
 package llamakot.bettermappet.mixins.scripts.code;
 
-import llamakot.bettermappet.api.scripts.code.ScriptCamera;
-import llamakot.bettermappet.mixins.MixinTargetName;
+import llamakot.bettermappet.mixins.utils.MixinTargetName;
 import llamakot.bettermappet.utils.IllegalSkin;
 import mchorse.mappet.api.scripts.code.ScriptFactory;
 import org.spongepowered.asm.mixin.Mixin;

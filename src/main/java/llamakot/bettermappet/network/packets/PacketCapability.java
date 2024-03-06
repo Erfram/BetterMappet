@@ -5,6 +5,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import io.netty.buffer.ByteBuf;
 import llamakot.bettermappet.capabilities.CapabilitiesType;
 import llamakot.bettermappet.capabilities.camera.Camera;
+import llamakot.bettermappet.capabilities.hand.Hand;
+import llamakot.bettermappet.capabilities.hud.Hud;
 import mchorse.mclib.network.ClientMessageHandler;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -43,6 +45,12 @@ public class PacketCapability implements IMessage {
             switch (type){
                 case CAMERA:
                     Camera.get(player).deserializeNBT(message.profile);
+                    break;
+                case HAND:
+                    Hand.get(player).deserializeNBT(message.profile);
+                    break;
+                case HUD:
+                    Hud.get(player).deserializeNBT(message.profile);
                     break;
             }
         }

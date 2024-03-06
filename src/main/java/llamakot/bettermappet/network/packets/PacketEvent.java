@@ -46,6 +46,15 @@ public class PacketEvent implements IMessage {
                 case CAMERA:
                     CommonProxy.eventTriggerHandler.onCameraEvent(entityPlayerMP);
                     break;
+                case HAND:
+                    CommonProxy.eventTriggerHandler.onRenderHandEvent(data, entityPlayerMP);
+                    break;
+                case KEYBOARD:
+                    CommonProxy.eventTriggerHandler.onKeyboardEvent(data, entityPlayerMP);
+                    break;
+                case HUD:
+                    CommonProxy.eventTriggerHandler.onRenderHudEvent(data, entityPlayerMP);
+                    break;
             }
         }
     }

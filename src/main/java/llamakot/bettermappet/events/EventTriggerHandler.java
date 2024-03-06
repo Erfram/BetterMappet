@@ -1,16 +1,16 @@
 package llamakot.bettermappet.events;
 
 import llamakot.bettermappet.capabilities.camera.Camera;
-import llamakot.bettermappet.triggers.TriggerAccessor;
-import llamakot.bettermappet.utils.ScriptVectorAngle;
+import llamakot.bettermappet.utils.triggers.TriggerAccessor;
 import mchorse.mappet.CommonProxy;
 import mchorse.mappet.Mappet;
-import mchorse.mappet.api.scripts.user.data.ScriptVector;
 import mchorse.mappet.api.triggers.Trigger;
 import mchorse.mappet.api.utils.DataContext;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.MouseEvent;
+import net.minecraftforge.client.event.RenderSpecificHandEvent;
 import net.minecraftforge.event.CommandEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -56,7 +56,7 @@ public class EventTriggerHandler {
         context.getValues().put("scale", camera.getScale());
         context.getValues().put("canceled", camera.isCanceled());
 
-        CommonProxy.eventHandler.trigger(new MouseEvent(), trigger, context);
+        trigger.trigger(context);
     }
 
     @SubscribeEvent
@@ -77,6 +77,61 @@ public class EventTriggerHandler {
         context.getValues().put("parameters", event.getParameters());
 
         CommonProxy.eventHandler.trigger(event, trigger, context);
+    }
+
+    public void onRenderHandEvent(NBTTagCompound data, EntityPlayerMP player) {
+        if (Mappet.settings == null) {
+            return;
+        }
+
+        Trigger trigger = ((TriggerAccessor) Mappet.settings).getPlayerRenderHand();
+
+        if (shouldCancelTrigger(trigger) || player.world.isRemote) {
+            return;
+        }
+
+        DataContext context = new DataContext(player);
+        context.getValues().put("partialTicks", data.getFloat("partialTicks"));
+        context.getValues().put("swingProgress", data.getFloat("swingProgress"));
+        context.getValues().put("equipProgress", data.getFloat("equipProgress"));
+        context.getValues().put("interpolatedPitch", data.getFloat("interpolatedPitch"));
+
+        trigger.trigger(context);
+    }
+
+    public void onKeyboardEvent(NBTTagCompound data, EntityPlayerMP player) {
+        if (Mappet.settings == null) {
+            return;
+        }
+
+        Trigger trigger = ((TriggerAccessor) Mappet.settings).getPlayerKeyboard();
+
+        if (shouldCancelTrigger(trigger) || player.world.isRemote) {
+            return;
+        }
+
+        DataContext context = new DataContext(player);
+        context.set("keyCode", data.getInteger("keyCode"));
+        context.getValues().put("keyState", data.getBoolean("keyState"));
+
+        trigger.trigger(context);
+    }
+
+    public void onRenderHudEvent(NBTTagCompound data, EntityPlayerMP player) {
+        if (Mappet.settings == null) {
+            return;
+        }
+
+        Trigger trigger = ((TriggerAccessor) Mappet.settings).getPlayerRenderHud();
+
+        if (shouldCancelTrigger(trigger) || player.world.isRemote) {
+            return;
+        }
+
+        DataContext context = new DataContext(player);
+        context.set("hudType", data.getString("hudType"));
+
+        trigger.trigger(context);
     }
 
     public boolean shouldCancelTrigger(Trigger trigger) {

@@ -111,7 +111,7 @@ dependencies {
     }
     annotationProcessor 'org.ow2.asm:asm-debug-all:5.2'
     annotationProcessor 'com.google.guava:guava:24.1.1-jre'
-    annotationProcessor 'com.google.code.gson:gson:2.8.6'
+    annotationProcessor 'com.google.code.gson:gson:2.8.7'
     annotationProcessor (mixin) {
         transitive = false
     }
@@ -191,6 +191,41 @@ artifacts {
     archives deobfJar
     archives sourcesJar
 }
+
+task scriptingJavadocs(type: Javadoc) {
+    source = sourceSets.main.allJava
+
+    include "mchorse/mappet/api/ui/components/**"
+    include "mchorse/mappet/client/gui/utils/graphics/Graphic**"
+    include "mchorse/mappet/api/scripts/user/**"
+}
+//Dyamo glupiy malcheg
+import org.apache.tools.ant.taskdefs.condition.Os
+
+task scriptingJavadocsJson(type: Exec) {
+    // Writing gradle tasks is PAIN, if you'll ever would need to run this, clone and build:
+    // https://github.com/mchorse/jsonDoclet
+    //
+    // Rename it to jsonDoclet.jar, and place it in the run/ folder
+    executable Os.isFamily(Os.FAMILY_WINDOWS) ? "javadoc" : "${org.gradle.internal.jvm.Jvm.current().getJavaHome()}/bin/javadoc"
+    List<String> subpackages = new ArrayList(Arrays.asList(
+            "llamakot.bettermappet.api.scripts.user",
+            "llamakot.bettermappet.mixins.scripts.code",
+    ))
+    List<String> excluded = new ArrayList(Arrays.asList(
+            "llamakot.bettermappet.scripts.code.ignored"
+    ))
+    args "-doclet", "mchorse.utils.doclets.JsonDoclet", "-docletpath", "./run/jsonDoclet.jar", "-sourcepath", "./src/main/java",
+            "-subpackages", subpackages.join(":"),
+            "-exclude", excluded.join(":"),
+            "-verbose"
+
+    doLast {
+        file("src/main/resources/assets/bettermappet/docs.json").setText(file("docs.json").text)
+    }
+}
+
+tasks.processResources.dependsOn(scriptingJavadocsJson)
 
 task compareLangFiles {
     doLast {
@@ -316,5 +351,34 @@ task copyLangStrings {
         }
 
         print("Done!")
+    }
+}
+
+task setIncludeProvidedOption {
+    inputs.property "date", new Date()
+
+    doLast {
+        includeProvidedOption("Client")
+        includeProvidedOption("Server")
+    }
+}
+
+def includeProvidedOption(String configuration) {
+    // Fuck groovy!
+    def runConfigPath = ".idea/runConfigurations/run" + configuration + ".xml"
+    def xml = new XmlParser(false, true).parse(file(runConfigPath))
+    def toAdd = new XmlParser(false, true).parseText("<option name=\"INCLUDE_PROVIDED_SCOPE\" value=\"true\" />")
+    def children = xml.find { it.name() == "configuration" }.children()
+    if (children.find { it.name() == "option" && it.attribute("name") == "INCLUDE_PROVIDED_SCOPE" } != null) {
+        return
+    }
+    children.add(0, toAdd)
+
+    new XmlNodePrinter(new PrintWriter(new FileWriter(runConfigPath))).print(xml)
+}
+
+tasks.configureEach { task ->
+    if (task.name.contains("genIntellijRuns")) {
+        task.finalizedBy setIncludeProvidedOption
     }
 }

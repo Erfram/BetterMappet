@@ -3,6 +3,7 @@ package llamakot.bettermappet.network.packets;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import io.netty.buffer.ByteBuf;
+import llamakot.bettermappet.client.AccessType;
 import llamakot.bettermappet.network.Dispatcher;
 import llamakot.bettermappet.utils.PlayerData;
 import mchorse.mclib.network.ClientMessageHandler;
@@ -22,6 +23,7 @@ import java.util.function.Consumer;
 public class PacketClientData implements IMessage {
     public static final Map<UUID, Consumer<Object>> сallBack = new HashMap<>();
     PlayerData type;
+    AccessType accessType;
     NBTTagCompound data;
     String uniqueId;
 
@@ -38,6 +40,12 @@ public class PacketClientData implements IMessage {
         this.type = type;
         this.data = data;
         this.uniqueId = uniqueId;
+    }
+
+    public PacketClientData(PlayerData type, NBTTagCompound data) {
+        this.type = type;
+        this.data = data;
+        this.uniqueId = "null";
     }
 
     public PacketClientData(PlayerData type, UUID uniqueId) {
