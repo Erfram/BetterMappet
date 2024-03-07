@@ -3,6 +3,7 @@ package llamakot.bettermappet;
 import mchorse.mclib.McLib;
 import mchorse.mclib.config.ConfigBuilder;
 import mchorse.mclib.config.ConfigManager;
+import mchorse.mclib.config.values.ValueBoolean;
 import mchorse.mclib.config.values.ValueString;
 import mchorse.mclib.events.RegisterConfigEvent;
 import net.minecraftforge.fml.common.Loader;
@@ -37,7 +38,6 @@ public class BetterMappet {
     public static final Logger logger = LogManager.getLogger(MOD_ID);
     public static final int mainColor = 0xFFAA00;
     public ConfigManager configs;
-    public static ValueString directory;
 
     @Mod.Instance
     public static BetterMappet instance;
@@ -45,9 +45,13 @@ public class BetterMappet {
     @SidedProxy(serverSide = "llamakot.bettermappet.CommonProxy", clientSide = "llamakot.bettermappet.ClientProxy")
     public static CommonProxy proxy;
 
+    public static ValueBoolean translateDocs;
+
     @SubscribeEvent
     public void onConfigRegister(RegisterConfigEvent event) {
         ConfigBuilder builder = event.createBuilder(MOD_ID);
+
+        //translateDocs = builder.getBoolean("translate_docs", false);
     }
 
     @Mod.EventHandler
