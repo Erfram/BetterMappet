@@ -1,6 +1,6 @@
 [{
   "modid": "bettermappet",
-  "name": "BetterMappet",
+  "name": "Better Mappet",
   "description": "Addon that contains many useful features for Mappet",
   "version": "${version}",
   "mcversion": "${mcversion}",

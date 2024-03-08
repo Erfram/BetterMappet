@@ -1,7 +1,7 @@
 {
   "required": true,
   "compatibilityLevel": "JAVA_8",
-  "package": "llamakot.bettermappet.mixins",
+  "package": "llama.bettermappet.mixins",
   "refmap": "mixins.bettermappet.refmap.json",
   "priority": 1,
   "mixinPriority": 100,
@@ -12,6 +12,8 @@
     "scripts.code.MixinScriptPlayer"
   ],
   "client": [
+    "MixinGuiMultiTextElement",
+    "MixinGuiTextEditor"
   ],
   "server": [
   ]

@@ -18,7 +18,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: "org.spongepowered.mixin"
 
-group = 'llamakot.bettermappet'
+group = 'llama.bettermappet'
 archivesBaseName = "betterMappet"
 sourceCompatibility = targetCompatibility = "1.8"
 compileJava.options.encoding = 'UTF-8'
@@ -209,11 +209,11 @@ task scriptingJavadocsJson(type: Exec) {
     // Rename it to jsonDoclet.jar, and place it in the run/ folder
     executable Os.isFamily(Os.FAMILY_WINDOWS) ? "javadoc" : "${org.gradle.internal.jvm.Jvm.current().getJavaHome()}/bin/javadoc"
     List<String> subpackages = new ArrayList(Arrays.asList(
-            "llamakot.bettermappet.api.scripts.user",
-            "llamakot.bettermappet.mixins.scripts.code",
+            "llama.bettermappet.api.scripts.user",
+            "llama.bettermappet.mixins.scripts.code",
     ))
     List<String> excluded = new ArrayList(Arrays.asList(
-            "llamakot.bettermappet.scripts.code.ignored"
+            "llama.bettermappet.scripts.code.ignored"
     ))
     args "-doclet", "mchorse.utils.doclets.JsonDoclet", "-docletpath", "./run/jsonDoclet.jar", "-sourcepath", "./src/main/java",
             "-subpackages", subpackages.join(":"),
