@@ -4,7 +4,6 @@ import mchorse.mclib.McLib;
 import mchorse.mclib.config.ConfigBuilder;
 import mchorse.mclib.config.ConfigManager;
 import mchorse.mclib.config.values.ValueBoolean;
-import mchorse.mclib.config.values.ValueString;
 import mchorse.mclib.events.RegisterConfigEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
