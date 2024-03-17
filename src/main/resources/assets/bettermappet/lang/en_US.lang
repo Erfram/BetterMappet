@@ -20,7 +20,7 @@ mappet.gui.settings.triggers.variables.player_render_hand=§6partialTicks§r \n�
 
 mappet.gui.settings.triggers.player_render_hud=Player: when rendering hoods
 mappet.gui.settings.triggers.descriptions.player_render_hud=This trigger fires when vanilla hoods are rendered.
-mappet.gui.settings.triggers.triggers.variables.player_render_hud=§hudType§r, type of hood.
+mappet.gui.settings.triggers.variables.player_render_hud=§hudType§r, type of hood.
 
 mappet.gui.settings.triggers.player_keyboard=Player: when pressing the keyboard keys
 mappet.gui.settings.triggers.descriptions.player_keyboard=This trigger fires when the player presses a keyboard key

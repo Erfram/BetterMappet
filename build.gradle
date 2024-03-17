@@ -18,11 +18,10 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: "org.spongepowered.mixin"
 
-group = 'llamakot.bettermappet'
-archivesBaseName = "betterMappet"
+group = 'llama.bettermappet'
+archivesBaseName = "bettermappet"
 sourceCompatibility = targetCompatibility = "1.8"
 compileJava.options.encoding = 'UTF-8'
-
 
 version = project.version
 
@@ -199,33 +198,33 @@ task scriptingJavadocs(type: Javadoc) {
     include "mchorse/mappet/client/gui/utils/graphics/Graphic**"
     include "mchorse/mappet/api/scripts/user/**"
 }
-//Dyamo glupiy malcheg
-import org.apache.tools.ant.taskdefs.condition.Os
-
-task scriptingJavadocsJson(type: Exec) {
-    // Writing gradle tasks is PAIN, if you'll ever would need to run this, clone and build:
-    // https://github.com/mchorse/jsonDoclet
-    //
-    // Rename it to jsonDoclet.jar, and place it in the run/ folder
-    executable Os.isFamily(Os.FAMILY_WINDOWS) ? "javadoc" : "${org.gradle.internal.jvm.Jvm.current().getJavaHome()}/bin/javadoc"
-    List<String> subpackages = new ArrayList(Arrays.asList(
-            "llamakot.bettermappet.api.scripts.user",
-            "llamakot.bettermappet.mixins.scripts.code",
-    ))
-    List<String> excluded = new ArrayList(Arrays.asList(
-            "llamakot.bettermappet.scripts.code.ignored"
-    ))
-    args "-doclet", "mchorse.utils.doclets.JsonDoclet", "-docletpath", "./run/jsonDoclet.jar", "-sourcepath", "./src/main/java",
-            "-subpackages", subpackages.join(":"),
-            "-exclude", excluded.join(":"),
-            "-verbose"
-
-    doLast {
-        file("src/main/resources/assets/bettermappet/docs.json").setText(file("docs.json").text)
-    }
-}
-
-tasks.processResources.dependsOn(scriptingJavadocsJson)
+////Dyamo glupiy malcheg
+//import org.apache.tools.ant.taskdefs.condition.Os
+//
+//task scriptingJavadocsJson(type: Exec) {
+//    // Writing gradle tasks is PAIN, if you'll ever would need to run this, clone and build:
+//    // https://github.com/mchorse/jsonDoclet
+//    //
+//    // Rename it to jsonDoclet.jar, and place it in the run/ folder
+//    executable Os.isFamily(Os.FAMILY_WINDOWS) ? "javadoc" : "${org.gradle.internal.jvm.Jvm.current().getJavaHome()}/bin/javadoc"
+//    List<String> subpackages = new ArrayList(Arrays.asList(
+//            //"llama.bettermappet.api.scripts.user",
+//            "llama.bettermappet.mixins.scripts.code",
+//    ))
+//    List<String> excluded = new ArrayList(Arrays.asList(
+//            //"llama.bettermappet.scripts.code.ignored"
+//    ))
+//    args "-doclet", "mchorse.utils.doclets.JsonDoclet", "-docletpath", "./run/jsonDoclet.jar", "-sourcepath", "./src/main/java",
+//            "-subpackages", subpackages.join(":"),
+//            "-exclude", excluded.join(":"),
+//            "-verbose"
+//
+//    doLast {
+//        file("src/main/resources/assets/bettermappet/docs.json").setText(file("docs.json").text)
+//    }
+//}
+//
+//tasks.processResources.dependsOn(scriptingJavadocsJson)
 
 task compareLangFiles {
     doLast {

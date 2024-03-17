@@ -1,15 +1,15 @@
 {
   "required": true,
   "compatibilityLevel": "JAVA_8",
-  "package": "llamakot.bettermappet.mixins",
+  "package": "llama.bettermappet.mixins",
   "refmap": "mixins.bettermappet.refmap.json",
   "priority": 1,
   "mixinPriority": 100,
   "mixins": [
     "MixinServerSettings",
-    "documentation.MixinDocMerger",
     "scripts.code.MixinScriptFactory",
-    "scripts.code.MixinScriptPlayer"
+    "scripts.code.MixinScriptPlayer",
+    "scripts.code.MixinScriptServer"
   ],
   "client": [
   ],
