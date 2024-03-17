@@ -11,8 +11,8 @@ public interface ICamera {
     ScriptVector getScale();
     void setScale(float x, float y, float z);
 
-    ScriptVector getTranslate();
-    void setTranslate(float x, float y, float z);
+    ScriptVector getPosition();
+    void setPosition(float x, float y, float z);
 
     void setCanceled(boolean canceled);
     boolean isCanceled();

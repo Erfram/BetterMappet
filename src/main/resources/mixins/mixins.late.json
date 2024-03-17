@@ -12,6 +12,7 @@
     "scripts.code.MixinScriptServer"
   ],
   "client": [
+    "client.MixinGuiTriggerBlockScreen"
   ],
   "server": [
   ]

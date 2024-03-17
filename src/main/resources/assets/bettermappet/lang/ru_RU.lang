@@ -3,6 +3,10 @@
 ## CONFIG
 bettermappet.config.title=Better Mappet
 
+bettermappet.config.blocks.title=Блоки
+bettermappet.config.blocks.remove_restrictions_script_block.title=Снятие ограничений с триггер-блока
+bettermappet.config.blocks.remove_restrictions_script_block.tooltip=§l§cТОЛЬКО ДЛЯ ПРОФЕССИОНАЛЬНЫХ ПОЛЬЗОВАТЕЛЕЙ!§r Убрать ограничения в триггерном блоке с хитбоксов!
+
 ## TRIGGERS
 
 # ИГРОК

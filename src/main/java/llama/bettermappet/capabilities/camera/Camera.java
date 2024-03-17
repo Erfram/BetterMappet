@@ -10,7 +10,7 @@ public class Camera implements ICamera {
 
     public ScriptVectorAngle rotate = new ScriptVectorAngle(0, 0, 0, 0);
     public ScriptVector scale = new ScriptVector(1, 1, 1);
-    public ScriptVector translate = new ScriptVector(0, 0, 0);
+    public ScriptVector position = new ScriptVector(0, 0, 0);
     public boolean canceled = false;
 
     public static Camera get(EntityPlayer player)
@@ -53,15 +53,15 @@ public class Camera implements ICamera {
     }
 
     @Override
-    public ScriptVector getTranslate() {
-        return this.translate;
+    public ScriptVector getPosition() {
+        return this.position;
     }
 
     @Override
-    public void setTranslate(float x, float y, float z) {
-        this.translate.x = x;
-        this.translate.y = y;
-        this.translate.z = z;
+    public void setPosition(float x, float y, float z) {
+        this.position.x = x;
+        this.position.y = y;
+        this.position.z = z;
     }
 
     @Override
@@ -90,9 +90,9 @@ public class Camera implements ICamera {
         scale.setFloat("z", (float)this.scale.z);
 
         NBTTagCompound translate = new NBTTagCompound();
-        translate.setFloat("x", (float)this.translate.x);
-        translate.setFloat("y", (float)this.translate.y);
-        translate.setFloat("z", (float)this.translate.z);
+        translate.setFloat("x", (float)this.position.x);
+        translate.setFloat("y", (float)this.position.y);
+        translate.setFloat("z", (float)this.position.z);
 
         tag.setTag("rotate", rotate);
         tag.setTag("scale", scale);
@@ -117,7 +117,7 @@ public class Camera implements ICamera {
 
         if (tag.hasKey("translate")) {
             NBTTagCompound translate = tag.getCompoundTag("translate");
-            this.translate = new ScriptVector(translate.getFloat("x"), translate.getFloat("y"), translate.getFloat("z"));
+            this.position = new ScriptVector(translate.getFloat("x"), translate.getFloat("y"), translate.getFloat("z"));
         }
 
         if (tag.hasKey("canceled")) {

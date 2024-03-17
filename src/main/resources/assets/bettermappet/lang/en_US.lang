@@ -3,6 +3,10 @@
 ## CONFIG
 bettermappet.config.title=Better Mappet
 
+bettermappet.config.blocks.title=Blocks
+bettermappet.config.blocks.remove_restrictions_script_block.title=Remove restrictions from the trigger block
+bettermappet.config.blocks.remove_restrictions_script_block.tooltip=§l§cFOR THE PROFESSIONAL USERS!§r Remove restrictions in trigger block from hitboxes!
+
 ## TRIGGERS
 
 # PLAYER
@@ -31,3 +35,6 @@ mappet.gui.settings.triggers.command=Command: when executing command
 mappet.gui.settings.triggers.descriptions.command=This cancelable trigger fires, before the command is executed.
 mappet.gui.settings.triggers.variables.command=§6command§r, command name.\n§6sender§r, command sender.\n§6parameters§r, (§8String[]§r) command parameter list.
 
+## BLOCKS
+tile.bettermappet.mark.name=Mark block
+tile.bettermappet.mark.tooltip=TO/DO

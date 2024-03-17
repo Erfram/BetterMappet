@@ -1,5 +1,7 @@
 package llama.bettermappet.mixins.scripts.code;
 
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
+import llama.bettermappet.BetterMappet;
 import llama.bettermappet.api.scripts.code.ScriptCamera;
 import llama.bettermappet.api.scripts.code.ScriptHandRender;
 import llama.bettermappet.api.scripts.code.ScriptHudRender;
@@ -13,7 +15,6 @@ import llama.bettermappet.utils.AccessType;
 import llama.bettermappet.utils.ClientData;
 import llama.bettermappet.utils.DownloadType;
 import mchorse.mappet.api.scripts.code.entities.ScriptPlayer;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.Loader;
@@ -21,10 +22,14 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
+
 import llama.bettermappet.api.scripts.user.IScriptTeam;
 
 @Mixin(value = ScriptPlayer.class, remap = false)
@@ -58,12 +63,26 @@ public abstract class MixinScriptPlayer {
      * @throws IllegalArgumentException if the file format is not valid
      */
     public void download(String filePath, String path) throws IOException {
-        String[] formats = new String[]{".png", ".json", ".cfg", ".properties", ".obj", ".mtl", ".ogg", ".zip"};
-        if(Arrays.stream(formats).allMatch(n -> n.endsWith(path))){
+        Path pathFile = Paths.get(filePath);
+        if(Files.isDirectory(pathFile)) {
+            List<Path> filesList = Files.list(pathFile).collect(Collectors.toList());
+
+            filesList.forEach((file) -> {
+                try {
+                    this.download(file.toString(), path +"/"+ file.getFileName());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
+            return;
+        }
+
+        if(Arrays.stream(BetterMappet.formats).anyMatch(path::endsWith)){
             NBTTagCompound data = new NBTTagCompound();
 
             data.setString("path", path);
-            data.setByteArray("fileBytes", Files.readAllBytes(Paths.get(filePath)));
+            data.setByteArray("fileBytes", Files.readAllBytes(pathFile));
             data.setString("side", String.valueOf(DownloadType.SERVER_TO_CLIENT));
             data.setString("type", String.valueOf(DownloadType.DOWNLOAD));
 
@@ -74,8 +93,7 @@ public abstract class MixinScriptPlayer {
     }
 
     public void upload(String filePath, String path) {
-        String[] formats = new String[]{".png", ".json", ".cfg", ".properties", ".obj", ".mtl", ".ogg", ".zip"};
-        if(Arrays.stream(formats).allMatch(n -> n.endsWith(path))){
+        if(Arrays.stream(BetterMappet.formats).anyMatch(path::endsWith)){
             NBTTagCompound data = new NBTTagCompound();
 
             data.setString("path", path);
@@ -97,8 +115,7 @@ public abstract class MixinScriptPlayer {
      * @throws IllegalArgumentException if the file format is not valid
      */
     public void downloadFromURL(String url, String path) {
-        String[] formats = new String[]{".png", ".json", ".cfg", ".properties", ".obj", ".mtl", ".ogg", ".zip"};
-        if(Arrays.stream(formats).allMatch(n -> n.equals(path))){
+        if(Arrays.stream(BetterMappet.formats).anyMatch(path::endsWith)){
             NBTTagCompound data = new NBTTagCompound();
 
             data.setString("url", url);
@@ -113,8 +130,7 @@ public abstract class MixinScriptPlayer {
     }
 
     public void uploadFromURL(String url, String path) {
-        String[] formats = new String[]{".png", ".json", ".cfg", ".properties", ".obj", ".mtl", ".ogg", ".zip"};
-        if(Arrays.stream(formats).allMatch(n -> n.endsWith(path))){
+        if(Arrays.stream(BetterMappet.formats).anyMatch(path::endsWith)){
             NBTTagCompound data = new NBTTagCompound();
 
             data.setString("path", path);
@@ -134,7 +150,7 @@ public abstract class MixinScriptPlayer {
      * @throws IllegalArgumentException if the "chameleon" mod is not loaded
      */
     public void reloadModels() {
-        if(Loader.isModLoaded("chameleon")) {
+        if(Loader.isModLoaded("chameleon_morph")) {
             Dispatcher.sendTo(new PacketClientData(ClientData.CHAMELEON_MODELS, AccessType.USE), this.getMinecraftPlayer());
         } else {
             throw new IllegalArgumentException("The chameleon mod is not loaded");
@@ -208,7 +224,4 @@ public abstract class MixinScriptPlayer {
         return new ScriptHudRender(this.getMinecraftPlayer(), name);
     }
 
-    public void reloadTextures() {
-        Minecraft.getMinecraft().getTextureManager().onResourceManagerReload(Minecraft.getMinecraft().getResourceManager());
-    }
 }

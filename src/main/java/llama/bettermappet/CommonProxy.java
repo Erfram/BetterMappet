@@ -13,14 +13,12 @@ import llama.bettermappet.events.ClientEventHandler;
 import llama.bettermappet.events.EventHandler;
 import llama.bettermappet.events.EventTriggerHandler;
 import llama.bettermappet.network.Dispatcher;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class CommonProxy {
     public static EventTriggerHandler eventTriggerHandler;

@@ -1,7 +1,9 @@
 package llama.bettermappet;
 
 import mchorse.mclib.McLib;
+import mchorse.mclib.config.ConfigBuilder;
 import mchorse.mclib.config.ConfigManager;
+import mchorse.mclib.config.values.ValueBoolean;
 import mchorse.mclib.events.RegisterConfigEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
@@ -25,6 +27,8 @@ public class BetterMappet {
     public BetterMappet() {
     }
 
+    public static final String[] formats = new String[]{".png", ".json", ".cfg", ".properties", ".obj", ".mtl", ".ogg", ".zip"};
+
     public static final String MOD_ID = "bettermappet";
     public static final String NAME = "BetterMappet";
 
@@ -38,10 +42,14 @@ public class BetterMappet {
     @SidedProxy(serverSide = "llama.bettermappet.CommonProxy", clientSide = "llama.bettermappet.ClientProxy")
     public static CommonProxy proxy;
 
+    public static ValueBoolean removeRestrictionsScriptBlock;
 
     @SubscribeEvent
     public void onConfigRegister(RegisterConfigEvent event) {
-
+        ConfigBuilder builder = event.createBuilder(BetterMappet.MOD_ID);
+        builder.category("blocks");
+        removeRestrictionsScriptBlock = builder.getBoolean("remove_restrictions_script_block", false);
+        removeRestrictionsScriptBlock.clientSide();
     }
 
     @Mod.EventHandler

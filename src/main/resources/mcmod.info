@@ -10,7 +10,10 @@
     "MrKot"
   ],
   "credits": "Special thanks to TorayLife for helping and supporting!",
-  "logoFile": "logo.png",
+  "logoFile": "icon.png",
+  "screenshots": [
+    "icon.png"
+  ],
   "useDependencyInformation": true,
   "requiredMods": [
     "mappet"

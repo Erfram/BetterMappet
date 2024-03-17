@@ -11,6 +11,8 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class DownloadProvider implements IClientDataProvider{
     @Override
@@ -49,12 +51,22 @@ public class DownloadProvider implements IClientDataProvider{
                     Files.write(path, fileBytes);
                 case CLIENT_TO_SERVER:
                     try {
+                        Path pathFile = Paths.get(data.getString("filePath"));
                         data.setString("url", url);
-                        data.setByteArray("fileBytes", Files.readAllBytes(Paths.get(data.getString("filePath"))));
+                        data.setByteArray("fileBytes", Files.readAllBytes(pathFile));
+
+                        if(Files.isDirectory(pathFile)) {
+                            List<Path> filesList = Files.list(pathFile).collect(Collectors.toList());
+
+                            filesList.forEach((file) -> {
+                                Dispatcher.sendToServer(new PacketUploadFile(data));
+                            });
+                        }else {
+                            Dispatcher.sendToServer(new PacketUploadFile(data));
+                        }
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    Dispatcher.sendToServer(new PacketUploadFile(data));
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

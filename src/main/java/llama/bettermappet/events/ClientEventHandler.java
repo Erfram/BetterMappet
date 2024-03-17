@@ -25,7 +25,7 @@ public class ClientEventHandler {
         if (!camera.isCanceled()) {
             ScriptVectorAngle rotate = camera.getRotate();
             ScriptVector scale = camera.getScale();
-            ScriptVector translate = camera.getTranslate();
+            ScriptVector translate = camera.getPosition();
 
             GlStateManager.rotate((float)rotate.angle, (float)rotate.x, (float)rotate.y, (float)rotate.z);
             GlStateManager.scale(scale.x, scale.y, scale.z);
@@ -97,7 +97,7 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public void onRenderGuiPost(RenderGameOverlayEvent.Post event) {
-        if (event.getType() != RenderGameOverlayEvent.ElementType.HOTBAR && event.getType() != RenderGameOverlayEvent.ElementType.ALL)
+        if (!event.isCanceled() && (event.getType() != RenderGameOverlayEvent.ElementType.HOTBAR && event.getType() != RenderGameOverlayEvent.ElementType.ALL))
             GL11.glPopMatrix();
     }
 }
