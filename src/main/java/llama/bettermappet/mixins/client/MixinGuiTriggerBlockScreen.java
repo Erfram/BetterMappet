@@ -14,7 +14,7 @@ public abstract class MixinGuiTriggerBlockScreen {
     @Inject(method = "sanitizeTrackpads", at = @At(value = "INVOKE_ASSIGN", target = "Lmchorse/mappet/client/gui/utils/GuiVecPosElement;clamp(Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/util/math/Vec3d;)Lmchorse/mappet/client/gui/utils/GuiVecPosElement;"))
     public void onSanitizeTrackpads(GuiVecPosElement guiVecPosElement, CallbackInfo ci) {
         if(BetterMappet.removeRestrictionsScriptBlock.get()) {
-            guiVecPosElement.clamp(Vec3d.ZERO, new Vec3d(30, 30, 30));
+            guiVecPosElement.clamp(new Vec3d(-3, -3, -3), new Vec3d(3, 3, 3));
         }
     }
 }

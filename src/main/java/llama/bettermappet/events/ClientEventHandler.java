@@ -47,12 +47,9 @@ public class ClientEventHandler {
         ScriptVectorAngle rotate = hand.getRotate();
         boolean canceled = hand.isCanceled();
 
-        if(canceled) {
-            event.setCanceled(true);
-            return;
-        }
+        event.setCanceled(canceled);
 
-        if(position.x == 0 && position.y == 0 && position.z == 0 && rotate.angle == 0 && rotate.x == 0 && rotate.y == 0 && rotate.z == 0){
+        if(canceled && (position.x == 0 && position.y == 0 && position.z == 0 && rotate.angle == 0 && rotate.x == 0 && rotate.y == 0 && rotate.z == 0)){
             return;
         }
 

@@ -29,7 +29,7 @@ public interface IScriptMatrix {
      * @param col column index
      * @return value of matrix element by given indices
      */
-    double get(int row, int col);
+    double getValue(int row, int col);
 
     /**
      * Sets the value of the matrix element by the given row and column indices.
@@ -38,7 +38,7 @@ public interface IScriptMatrix {
      * @param col column index
      * @param value new value of the matrix element
      */
-    void set(int row, int col, double value);
+    void setValue(int row, int col, double value);
 
     /**
      * Checks if the matrix contains elements within a given radius from a specified point.

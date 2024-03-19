@@ -14,7 +14,7 @@ public class ScriptMatrix implements IScriptMatrix {
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                this.set(i, j, 0);
+                this.setValue(i, j, 0);
             }
         }
     }
@@ -29,7 +29,7 @@ public class ScriptMatrix implements IScriptMatrix {
                 throw new IllegalArgumentException("All strings must have the same length");
             }
             for (int j = 0; j < cols; j++) {
-                this.set(i, j, data[i][j]);
+                this.setValue(i, j, data[i][j]);
             }
         }
     }
@@ -45,12 +45,12 @@ public class ScriptMatrix implements IScriptMatrix {
     }
 
     @Override
-    public double get(int row, int col) {
+    public double getValue(int row, int col) {
         return this.data[row][col];
     }
 
     @Override
-    public void set(int row, int col, double value) {
+    public void setValue(int row, int col, double value) {
         this.data[row][col] = value;
     }
 
