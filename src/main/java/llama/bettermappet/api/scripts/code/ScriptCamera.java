@@ -23,7 +23,7 @@ public class ScriptCamera implements IScriptCamera {
 
     @Override
     public void setRotate(float angle, float x, float y, float z) {
-        camera.setRotate(angle, x, y, z);
+        this.camera.setRotate(angle, x, y, z);
 
         this.sendToCapability();
     }
@@ -35,12 +35,12 @@ public class ScriptCamera implements IScriptCamera {
 
     @Override
     public ScriptVector getScale() {
-        return camera.getScale();
+        return this.camera.getScale();
     }
 
     @Override
     public void setScale(float x, float y, float z) {
-        camera.setScale(x, y, z);
+        this.camera.setScale(x, y, z);
 
         this.sendToCapability();
     }
@@ -52,12 +52,12 @@ public class ScriptCamera implements IScriptCamera {
 
     @Override
     public ScriptVector getPosition() {
-        return camera.getPosition();
+        return this.camera.getPosition();
     }
 
     @Override
     public void setPosition(float x, float y, float z) {
-        camera.setPosition(x, y, z);
+        this.camera.setPosition(x, y, z);
 
         this.sendToCapability();
     }
@@ -69,14 +69,14 @@ public class ScriptCamera implements IScriptCamera {
 
     @Override
     public void setCanceled(boolean canceled) {
-        camera.setCanceled(canceled);
+        this.camera.setCanceled(canceled);
 
         this.sendToCapability();
     }
 
     @Override
     public boolean isCanceled() {
-        return camera.isCanceled();
+        return this.camera.isCanceled();
     }
 
     private void sendToCapability(){

@@ -42,14 +42,14 @@ public class BetterMappet {
     @SidedProxy(serverSide = "llama.bettermappet.CommonProxy", clientSide = "llama.bettermappet.ClientProxy")
     public static CommonProxy proxy;
 
-    public static ValueBoolean removeRestrictionsScriptBlock;
+    public ValueBoolean removeRestrictionsScriptBlock;
 
     @SubscribeEvent
     public void onConfigRegister(RegisterConfigEvent event) {
         ConfigBuilder builder = event.createBuilder(BetterMappet.MOD_ID);
         builder.category("blocks");
-        removeRestrictionsScriptBlock = builder.getBoolean("remove_restrictions_script_block", false);
-        removeRestrictionsScriptBlock.clientSide();
+        this.removeRestrictionsScriptBlock = builder.getBoolean("remove_restrictions_script_block", false);
+        this.removeRestrictionsScriptBlock.clientSide();
     }
 
     @Mod.EventHandler

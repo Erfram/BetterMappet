@@ -1,6 +1,5 @@
 package llama.bettermappet.mixins.scripts.code;
 
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import llama.bettermappet.BetterMappet;
 import llama.bettermappet.api.scripts.code.ScriptCamera;
 import llama.bettermappet.api.scripts.code.ScriptHandRender;
