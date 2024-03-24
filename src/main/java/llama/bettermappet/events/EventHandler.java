@@ -1,6 +1,8 @@
 package llama.bettermappet.events;
 
 import llama.bettermappet.BetterMappet;
+import llama.bettermappet.api.ui.components.UIColorPickerComponent;
+import llama.bettermappet.api.ui.components.UIScriptEditorComponent;
 import llama.bettermappet.capabilities.CapabilitiesType;
 import llama.bettermappet.capabilities.camera.Camera;
 import llama.bettermappet.capabilities.camera.CameraProvider;
@@ -15,6 +17,11 @@ import llama.bettermappet.network.Dispatcher;
 import llama.bettermappet.client.network.packets.PacketCapability;
 import llama.bettermappet.network.packets.PacketEvent;
 import llama.bettermappet.utils.EventType;
+import mchorse.mappet.CommonProxy;
+import mchorse.mappet.api.ui.components.UIComponent;
+import mchorse.mappet.api.ui.components.UITextareaComponent;
+import mchorse.mappet.api.utils.factory.MapFactory;
+import mchorse.mappet.events.RegisterUIComponentEvent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -78,5 +85,12 @@ public class EventHandler {
         data.setBoolean("keyState", Keyboard.getEventKeyState());
 
         Dispatcher.sendToServer(new PacketEvent(EventType.KEYBOARD, data));
+    }
+
+    @SubscribeEvent
+    public void onRegisterUIComponentEvent(RegisterUIComponentEvent event) {
+        ((MapFactory<UIComponent>)CommonProxy.getUiComponents())
+                .register("scriptEditor", UIScriptEditorComponent.class, 0xffffff)
+                .register("colorPicker", UIColorPickerComponent.class, 0xffffff);
     }
 }

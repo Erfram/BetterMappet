@@ -7,6 +7,7 @@
   "mixinPriority": 100,
   "mixins": [
     "MixinServerSettings",
+    "documentation.MixinDocMerger",
     "scripts.code.MixinMappetUIBuilder",
     "scripts.code.MixinScriptFactory",
     "scripts.code.MixinScriptPlayer",

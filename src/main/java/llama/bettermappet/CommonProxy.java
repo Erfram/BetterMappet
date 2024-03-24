@@ -13,6 +13,10 @@ import llama.bettermappet.events.ClientEventHandler;
 import llama.bettermappet.events.EventHandler;
 import llama.bettermappet.events.EventTriggerHandler;
 import llama.bettermappet.network.Dispatcher;
+import mchorse.mappet.Mappet;
+import mchorse.mappet.api.ui.components.*;
+import mchorse.mappet.api.utils.factory.MapFactory;
+import mchorse.mappet.events.RegisterUIComponentEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -34,6 +38,7 @@ public class CommonProxy {
 
         MinecraftForge.EVENT_BUS.register(eventTriggerHandler = new EventTriggerHandler());
         MinecraftForge.EVENT_BUS.register(eventHandler = new EventHandler());
+        Mappet.EVENT_BUS.register(eventHandler);
 
         Dispatcher.register();
 
@@ -46,5 +51,6 @@ public class CommonProxy {
     }
 
     public void postInit(FMLPostInitializationEvent event) {
+
     }
 }

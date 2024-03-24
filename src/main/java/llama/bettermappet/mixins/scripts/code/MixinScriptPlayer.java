@@ -37,19 +37,12 @@ public abstract class MixinScriptPlayer {
     public abstract EntityPlayerMP getMinecraftPlayer();
     EntityPlayerMP player = this.getMinecraftPlayer();
 
-    /**Download files from the specified world directory to the player's disk. If you don't specify a disk in the file path, you will start from the game folder. Available extensions:
-     * §cjson§r,
-     * §ccfg§r,
-     * §cproperties§r,
-     * §cpng§r,
-     * §cobj§r,
-     * §cmtl§r,
-     * §cogg§r,
-     * §czip§r
-     *
+    /**Download files from the specified world directory to the player's disk. If you don't specify a disk in the file path, you will start from the game folder.
      * <pre>{@code
+     *    const DimensionManager = Java.type('net.minecraftforge.common.DimensionManager')
+     *    const worldDir = DimensionManager.getCurrentSaveRootDirectory().toPath()
      *    function main(c) {
-     *        var filePath = mappet.getWorldDir().resolve('icon.png').getPath()
+     *        var filePath = worldDir().resolve('icon.png').toString()
      *
      *        // Loads the icon.png picture from the world folder, to the player in the config folder
      *        c.player.download(filePath, 'config\\icon.png')
@@ -77,7 +70,7 @@ public abstract class MixinScriptPlayer {
             return;
         }
 
-        if(Arrays.stream(BetterMappet.formats).anyMatch(path::endsWith)){
+        if(Arrays.stream(BetterMappet.formats).noneMatch(path::endsWith)){
             NBTTagCompound data = new NBTTagCompound();
 
             data.setString("path", path);
@@ -91,8 +84,15 @@ public abstract class MixinScriptPlayer {
         }
     }
 
+    /**
+     * upload a file from the specified path on the player's disk to the specified path on the server.
+     *
+     * @param filePath the path of the file to upload
+     * @param path the destination path on the server to save the file
+     * @throws IllegalArgumentException if the file format is not valid
+     */
     public void upload(String filePath, String path) {
-        if(Arrays.stream(BetterMappet.formats).anyMatch(path::endsWith)){
+        if(Arrays.stream(BetterMappet.formats).noneMatch(path::endsWith)){
             NBTTagCompound data = new NBTTagCompound();
 
             data.setString("path", path);
@@ -114,7 +114,7 @@ public abstract class MixinScriptPlayer {
      * @throws IllegalArgumentException if the file format is not valid
      */
     public void downloadFromURL(String url, String path) {
-        if(Arrays.stream(BetterMappet.formats).anyMatch(path::endsWith)){
+        if(Arrays.stream(BetterMappet.formats).noneMatch(path::endsWith)){
             NBTTagCompound data = new NBTTagCompound();
 
             data.setString("url", url);
@@ -128,8 +128,15 @@ public abstract class MixinScriptPlayer {
         }
     }
 
+    /**
+     * upload the file from the url to the specified path on the server.
+     *
+     * @param url url
+     * @param path the destination path on the server to save the file
+     * @throws IllegalArgumentException if the file format is not valid
+     */
     public void uploadFromURL(String url, String path) {
-        if(Arrays.stream(BetterMappet.formats).anyMatch(path::endsWith)){
+        if(Arrays.stream(BetterMappet.formats).noneMatch(path::endsWith)){
             NBTTagCompound data = new NBTTagCompound();
 
             data.setString("path", path);

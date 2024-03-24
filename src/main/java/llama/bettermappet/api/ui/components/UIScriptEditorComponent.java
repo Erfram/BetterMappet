@@ -1,8 +1,10 @@
 package llama.bettermappet.api.ui.components;
 
 import mchorse.mappet.api.ui.UIContext;
+import mchorse.mappet.api.ui.components.UIComponent;
 import mchorse.mappet.api.ui.components.UILabelBaseComponent;
 import mchorse.mappet.api.ui.utils.DiscardMethod;
+import mchorse.mappet.client.gui.panels.GuiScriptPanel;
 import mchorse.mappet.client.gui.scripts.GuiTextEditor;
 import mchorse.mclib.client.gui.framework.elements.GuiElement;
 import net.minecraft.client.Minecraft;
@@ -11,9 +13,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class UIScriptEditorComponent extends UILabelBaseComponent {
-    public UIScriptEditorComponent() {
-    }
-
     public UIScriptEditorComponent noBackground() {
         this.hasBackground = false;
         return this;
@@ -21,14 +20,14 @@ public class UIScriptEditorComponent extends UILabelBaseComponent {
 
     @Override
     @DiscardMethod
-    protected int getDefaultUpdateDelay() {
-        return 200;
+    public int getDefaultUpdateDelay() {
+        return UIComponent.DELAY;
     }
 
     @Override
     @DiscardMethod
     @SideOnly(Side.CLIENT)
-    protected void applyProperty(UIContext context, String key, GuiElement element) {
+    public void applyProperty(UIContext context, String key, GuiElement element) {
         super.applyProperty(context, key, element);
         if (key.equals("Label")) {
             ((GuiTextEditor)element).setText(this.label);
@@ -40,12 +39,13 @@ public class UIScriptEditorComponent extends UILabelBaseComponent {
     @SideOnly(Side.CLIENT)
     public GuiElement create(Minecraft minecraft, UIContext context) {
         GuiTextEditor textEditor = new GuiTextEditor(minecraft, (text) -> {
-            if(this.id.isEmpty()) {
+            if(!this.id.isEmpty()) {
                 context.data.setString(this.id, text);
                 context.dirty(this.id, (long)this.updateDelay);
             }
         });
-        textEditor.setText(this.label);
+        textEditor.context(() -> GuiScriptPanel.createScriptContextMenu(minecraft, textEditor));
+        textEditor.wrap().setText(this.label);
         textEditor.background(this.hasBackground);
         return this.apply(textEditor, context);
     }
@@ -57,5 +57,19 @@ public class UIScriptEditorComponent extends UILabelBaseComponent {
         if (!this.id.isEmpty()) {
             tag.setString(this.id, this.label);
         }
+    }
+
+    @Override
+    @DiscardMethod
+    public void serializeNBT(NBTTagCompound tag)
+    {
+        super.serializeNBT(tag);
+    }
+
+    @Override
+    @DiscardMethod
+    public void deserializeNBT(NBTTagCompound tag)
+    {
+        super.deserializeNBT(tag);
     }
 }
