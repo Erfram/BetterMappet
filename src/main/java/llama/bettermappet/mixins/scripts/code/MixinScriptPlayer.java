@@ -51,11 +51,6 @@ public abstract class MixinScriptPlayer {
      *        c.player.download(filePath, 'config\\icon.png')
      *    }
      * }</pre>
-     *
-     * @param filePath
-     * @param path
-     * @throws IOException if an I/O error occurs while reading the file
-     * @throws IllegalArgumentException if the file format is not valid
      */
     public void download(String filePath, String path) throws IOException {
         Path pathFile = Paths.get(filePath);
