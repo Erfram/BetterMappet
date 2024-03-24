@@ -206,7 +206,7 @@ task scriptingJavadocsJson(type: Exec) {
     executable Os.isFamily(Os.FAMILY_WINDOWS) ? "javadoc" : "${Jvm.current().getJavaHome()}/bin/javadoc"
     List<String> subpackages = new ArrayList(Arrays.asList(
             "llama.bettermappet.mixins.scripts.code",
-            "llama.bettermappet.api.scripts.user"
+            "llama.bettermappet.api.scripts.user",
     ))
     List<String> excluded = new ArrayList(Arrays.asList(
             "llama.bettermappet.mixins.client",
