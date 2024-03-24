@@ -39,7 +39,8 @@ public abstract class MixinScriptPlayer {
     public abstract EntityPlayerMP getMinecraftPlayer();
     EntityPlayerMP player = this.getMinecraftPlayer();
 
-    /**Download files from the specified world directory to the player's disk. If you don't specify a disk in the file path, you will start from the game folder.
+    /**
+     * Download files from the specified world directory to the player's disk. If you don't specify a disk in the file path, you will start from the game folder.
      * <pre>{@code
      *    const DimensionManager = Java.type('net.minecraftforge.common.DimensionManager')
      *    const worldDir = DimensionManager.getCurrentSaveRootDirectory().toPath()
