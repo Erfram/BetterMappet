@@ -41,10 +41,11 @@ public abstract class MixinScriptPlayer {
 
     /**
      * Download files from the specified world directory to the player's disk. If you don't specify a disk in the file path, you will start from the game folder.
+     *
      * <pre>{@code
-     *    const DimensionManager = Java.type('net.minecraftforge.common.DimensionManager')
-     *    const worldDir = DimensionManager.getCurrentSaveRootDirectory().toPath()
      *    function main(c) {
+     *        const DimensionManager = Java.type('net.minecraftforge.common.DimensionManager')
+     *        const worldDir = DimensionManager.getCurrentSaveRootDirectory().toPath()
      *        var filePath = worldDir().resolve('icon.png').toString()
      *
      *        // Loads the icon.png picture from the world folder, to the player in the config folder
@@ -176,10 +177,8 @@ public abstract class MixinScriptPlayer {
     /**
      * Returns a ScriptTeam object representing the player's team.
      * If the player is not on the team, the method returns null.
-     *
-     * @return a {@link IScriptTeam} object representing the player's team, or null if the player is not on the team
      */
-    public ScriptTeam getTeam() {
+    public IScriptTeam getTeam() {
         if(this.player.isOnScoreboardTeam(this.player.getTeam())) {
             return new ScriptTeam(this.player);
         }
