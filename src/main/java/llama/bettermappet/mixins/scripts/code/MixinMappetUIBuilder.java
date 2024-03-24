@@ -2,12 +2,14 @@ package llama.bettermappet.mixins.scripts.code;
 
 import llama.bettermappet.api.ui.components.UIColorPickerComponent;
 import llama.bettermappet.api.ui.components.UIScriptEditorComponent;
+import llama.bettermappet.mixins.utils.MixinTargetName;
 import mchorse.mappet.api.scripts.code.mappet.MappetUIBuilder;
 import mchorse.mappet.api.ui.components.UIComponent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(value = MappetUIBuilder.class, remap = false)
+@MixinTargetName("mchorse.mappet.api.scripts.code.mappet.MappetUIBuilder")
 public abstract class MixinMappetUIBuilder {
     @Shadow public abstract UIComponent getCurrent();
 
