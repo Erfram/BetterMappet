@@ -1,4 +1,4 @@
-package llama.bettermappet.mixins;
+package llama.bettermappet.mixins.utils;
 
 import llama.bettermappet.utils.TriggerAccessor;
 import mchorse.mappet.Mappet;

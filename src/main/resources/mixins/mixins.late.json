@@ -6,8 +6,7 @@
   "priority": 1,
   "mixinPriority": 100,
   "mixins": [
-    "MixinServerSettings",
-    "documentation.MixinDocMerger",
+    "utils.MixinServerSettings",
     "scripts.code.MixinMappetUIBuilder",
     "scripts.code.MixinScriptFactory",
     "scripts.code.MixinScriptPlayer",
@@ -15,6 +14,7 @@
   ],
   "client": [
     "client.MixinGuiTextEditor",
+    "documentation.MixinDocMerger",
     "client.MixinGuiTriggerBlockScreen"
   ],
   "server": [

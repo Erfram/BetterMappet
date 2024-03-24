@@ -8,6 +8,7 @@ import llama.bettermappet.api.scripts.code.ScriptTeam;
 import llama.bettermappet.api.scripts.user.IScriptCamera;
 import llama.bettermappet.api.scripts.user.IScriptHandRender;
 import llama.bettermappet.api.scripts.user.IScriptHudRender;
+import llama.bettermappet.mixins.utils.MixinTargetName;
 import llama.bettermappet.network.Dispatcher;
 import llama.bettermappet.client.network.packets.PacketClientData;
 import llama.bettermappet.utils.AccessType;
@@ -32,6 +33,7 @@ import java.util.stream.Collectors;
 import llama.bettermappet.api.scripts.user.IScriptTeam;
 
 @Mixin(value = ScriptPlayer.class, remap = false)
+@MixinTargetName("mchorse.mappet.api.scripts.user.entities.IScriptPlayer")
 public abstract class MixinScriptPlayer {
     @Shadow
     public abstract EntityPlayerMP getMinecraftPlayer();

@@ -2,6 +2,7 @@ package llama.bettermappet.mixins.scripts.code;
 
 import llama.bettermappet.api.scripts.code.ScriptTeam;
 import llama.bettermappet.api.scripts.user.IScriptTeam;
+import llama.bettermappet.mixins.utils.MixinTargetName;
 import mchorse.mappet.api.scripts.code.ScriptServer;
 import mchorse.mappet.api.scripts.user.IScriptFactory;
 import net.minecraft.command.CommandException;
@@ -12,6 +13,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(value = ScriptServer.class, remap = false)
+@MixinTargetName("mchorse.mappet.api.scripts.user.IScriptServer")
 public abstract class MixinScriptServer {
     @Shadow private MinecraftServer server;
 
