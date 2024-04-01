@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.Shadow;
 @MixinTargetName("mchorse.mappet.api.scripts.user.mappet.IMappetUIBuilder")
 public abstract class MixinMappetUIBuilder {
     @Shadow public abstract UIComponent getCurrent();
-
+    
     public UIScriptEditorComponent scriptEditor(String text) {
         UIScriptEditorComponent component = new UIScriptEditorComponent();
 

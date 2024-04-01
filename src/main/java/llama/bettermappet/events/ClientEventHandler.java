@@ -79,10 +79,12 @@ public class ClientEventHandler {
         event.setCanceled(canceled);
 
         if (!canceled && (event.getType() != RenderGameOverlayEvent.ElementType.HOTBAR && event.getType() != RenderGameOverlayEvent.ElementType.ALL)) {
-            GL11.glPushMatrix();
-            GL11.glRotated(rotate.angle, rotate.x, rotate.y, rotate.z);
-            GL11.glScaled(scale.x, scale.y, scale.z);
-            GL11.glTranslated(pos.x, pos.y, pos.z);
+            if (!(pos.x == 0 && pos.y == 0 && pos.z == 0 && rotate.angle == 0 && rotate.x == 0 && rotate.y == 0 && rotate.z == 0 && scale.x == 1 && scale.y == 1 && scale.z == 0)) {
+                GL11.glPushMatrix();
+                GL11.glRotated(rotate.angle, rotate.x, rotate.y, rotate.z);
+                GL11.glScaled(scale.x, scale.y, scale.z);
+                GL11.glTranslated(pos.x, pos.y, pos.z);
+            }
         }
 
         NBTTagCompound data = new NBTTagCompound();
@@ -94,7 +96,14 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public void onRenderGuiPost(RenderGameOverlayEvent.Post event) {
+        Hud hud = Hud.get(Minecraft.getMinecraft().player);
+
+        hud.setName(event.getType().name());
+        ScriptVector scale = hud.getScale();
+        ScriptVector pos = hud.getPosition();
+        ScriptVectorAngle rotate = hud.getRotate();
         if (!event.isCanceled() && (event.getType() != RenderGameOverlayEvent.ElementType.HOTBAR && event.getType() != RenderGameOverlayEvent.ElementType.ALL))
-            GL11.glPopMatrix();
+            if(!(pos.x == 0 && pos.y == 0 && pos.z == 0 && rotate.angle == 0 && rotate.x == 0 && rotate.y == 0 && rotate.z == 0 && scale.x == 1 && scale.y == 1 && scale.z == 0))
+                GL11.glPopMatrix();
     }
 }

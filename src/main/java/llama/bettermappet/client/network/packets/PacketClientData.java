@@ -1,6 +1,7 @@
 package llama.bettermappet.client.network.packets;
 
 import io.netty.buffer.ByteBuf;
+import llama.bettermappet.client.network.providers.SkinProvider;
 import llama.bettermappet.network.Dispatcher;
 import llama.bettermappet.utils.AccessType;
 import llama.bettermappet.utils.ClientData;
@@ -125,6 +126,8 @@ public class PacketClientData implements IMessage {
                     return new DownloadProvider();
                 case CHAMELEON_MODELS:
                     return new ChameleonModelsProvider();
+                case SKIN:
+                    return new SkinProvider();
             }
             throw new IllegalArgumentException("Invalid typeEnum");
         }

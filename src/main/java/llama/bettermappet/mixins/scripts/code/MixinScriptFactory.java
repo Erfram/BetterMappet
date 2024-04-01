@@ -1,8 +1,11 @@
 package llama.bettermappet.mixins.scripts.code;
 
 import llama.bettermappet.api.scripts.code.ScriptMatrix;
+import llama.bettermappet.api.scripts.code.ScriptVectorAngle;
+import llama.bettermappet.api.scripts.user.IScriptVectorAngle;
 import llama.bettermappet.mixins.utils.MixinTargetName;
 import mchorse.mappet.api.scripts.code.ScriptFactory;
+import net.minecraftforge.fml.common.Loader;
 import org.spongepowered.asm.mixin.Mixin;
 import llama.bettermappet.api.scripts.user.IScriptMatrix;
 
@@ -18,5 +21,26 @@ public abstract class MixinScriptFactory {
      */
     public ScriptMatrix createMatrix(int rows, int cols) {
         return new ScriptMatrix(rows, cols);
+    }
+
+    /**
+     * Checks if the mod is loaded with the specified ID.
+     *
+     * @param id
+     */
+    public boolean isModLoaded(String id) {
+        return Loader.isModLoaded(id);
+    }
+
+    /**
+     * create {@link IScriptVectorAngle}
+     *
+     * @param angle double
+     * @param x double
+     * @param y double
+     * @param z double
+     */
+    public IScriptVectorAngle vectorAngle(double angle, double x, double y, double z) {
+        return new ScriptVectorAngle(angle, x, y, z);
     }
 }

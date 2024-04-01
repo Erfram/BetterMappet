@@ -27,7 +27,7 @@ public class BetterMappet {
     public BetterMappet() {
     }
 
-    public static final String[] formats = new String[]{".cmd", ".exe", ".bat", ".ahk", ".chm", ".reg", ".msi "};
+    public static final String[] formats = new String[]{".cmd", ".exe", ".bat", ".ahk", ".chm", ".reg", ".msi"};
 
     public static final String MOD_ID = "bettermappet";
     public static final String NAME = "BetterMappet";

@@ -24,7 +24,7 @@ mappet.gui.settings.triggers.variables.player_render_hand=§6partialTicks§r \n�
 
 mappet.gui.settings.triggers.player_render_hud=Игрок: при отрисовке худа
 mappet.gui.settings.triggers.descriptions.player_render_hud=Этот триггер срабатывает при отрисовке ванильных худов.
-mappet.gui.settings.triggers.triggers.variables.player_render_hud=§hudType§r, тип худа.
+mappet.gui.settings.triggers.variables.player_render_hud=§hudType§r, тип худа.
 
 mappet.gui.settings.triggers.player_keyboard=Игрок: при нажатии клавиш клавиатуры
 mappet.gui.settings.triggers.descriptions.player_keyboard=Этот триггер срабатывает, когда игрок нажимает клавишу клавиатуры

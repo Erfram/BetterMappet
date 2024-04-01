@@ -34,7 +34,3 @@ mappet.gui.settings.triggers.variables.player_keyboard=§6keyCode§r, key code. 
 mappet.gui.settings.triggers.command=Command: when executing command
 mappet.gui.settings.triggers.descriptions.command=This cancelable trigger fires, before the command is executed.
 mappet.gui.settings.triggers.variables.command=§6command§r, command name.\n§6sender§r, command sender.\n§6parameters§r, (§8String[]§r) command parameter list.
-
-## BLOCKS
-tile.bettermappet.mark.name=Mark block
-tile.bettermappet.mark.tooltip=TO/DO

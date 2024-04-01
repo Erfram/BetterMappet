@@ -20,6 +20,12 @@ public enum ClientData {
         public Object process(NBTTagCompound data) {
             return data.getCompoundTag(this.name());
         }
+    },
+    SKIN{
+        @Override
+        public Object process(NBTTagCompound data) {
+            return data.getCompoundTag(this.name());
+        }
     };
 
     ClientData() {

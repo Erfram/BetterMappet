@@ -37,7 +37,7 @@ import llama.bettermappet.api.scripts.user.IScriptTeam;
 public abstract class MixinScriptPlayer {
     @Shadow
     public abstract EntityPlayerMP getMinecraftPlayer();
-    EntityPlayerMP player = this.getMinecraftPlayer();
+    EntityPlayerMP player = getMinecraftPlayer();
 
     /**
      * Download files from the specified world directory to the player's disk. If you don't specify a disk in the file path, you will start from the game folder.
@@ -121,7 +121,7 @@ public abstract class MixinScriptPlayer {
             data.setString("side", String.valueOf(DownloadType.SERVER_TO_CLIENT));
             data.setString("type", String.valueOf(DownloadType.URL));
 
-            Dispatcher.sendTo(new PacketClientData(ClientData.DOWNLOAD, AccessType.SET, data), this.getMinecraftPlayer());
+            Dispatcher.sendTo(new PacketClientData(ClientData.DOWNLOAD, AccessType.SET, data), this.player);
         } else {
             throw new IllegalArgumentException("Invalid file format");
         }
@@ -156,7 +156,7 @@ public abstract class MixinScriptPlayer {
      */
     public void reloadModels() {
         if(Loader.isModLoaded("chameleon_morph")) {
-            Dispatcher.sendTo(new PacketClientData(ClientData.CHAMELEON_MODELS, AccessType.USE), this.getMinecraftPlayer());
+            Dispatcher.sendTo(new PacketClientData(ClientData.CHAMELEON_MODELS, AccessType.USE), this.player);
         } else {
             throw new IllegalArgumentException("The chameleon mod is not loaded");
         }
@@ -171,7 +171,7 @@ public abstract class MixinScriptPlayer {
         UUID uniqueId = UUID.randomUUID();
         PacketClientData.callback.put(uniqueId, callback);
 
-        Dispatcher.sendTo(new PacketClientData(ClientData.TIME, AccessType.GET, uniqueId), this.getMinecraftPlayer());
+        Dispatcher.sendTo(new PacketClientData(ClientData.TIME, AccessType.GET, uniqueId), this.player);
     }
 
     /**
@@ -208,14 +208,14 @@ public abstract class MixinScriptPlayer {
      * @return the camera instance
      */
     public IScriptCamera getCamera() {
-        return new ScriptCamera(this.getMinecraftPlayer());
+        return new ScriptCamera(this.player);
     }
 
     /**
      * Gets a {@link IScriptHandRender} main or off - hand; 0 - main; 1 - off;.
      */
     public IScriptHandRender getHand(int hand) {
-        return new ScriptHandRender(this.getMinecraftPlayer(), hand);
+        return new ScriptHandRender(this.player, hand);
     }
 
     /**
@@ -224,7 +224,12 @@ public abstract class MixinScriptPlayer {
      * @param name the name of the HUD render
      */
     public IScriptHudRender getHud(String name) {
-        return new ScriptHudRender(this.getMinecraftPlayer(), name);
+        return new ScriptHudRender(this.player, name);
     }
 
+    public void setSkin(String url) {
+        NBTTagCompound data = new NBTTagCompound();
+        data.setString("url", url);
+        Dispatcher.sendTo(new PacketClientData(ClientData.SKIN, AccessType.SET, data), this.player);
+    }
 }

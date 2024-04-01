@@ -1,10 +1,10 @@
 package llama.bettermappet.api.ui.components;
 
-import llama.bettermappet.client.gui.CustomGuiColorPicker;
 import mchorse.mappet.api.ui.UIContext;
 import mchorse.mappet.api.ui.components.UIComponent;
 import mchorse.mappet.api.ui.utils.DiscardMethod;
 import mchorse.mclib.client.gui.framework.elements.GuiElement;
+import mchorse.mclib.client.gui.framework.elements.input.color.GuiColorPicker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
@@ -43,7 +43,7 @@ public class UIColorPickerComponent extends UIComponent {
     {
         super.applyProperty(context, key, element);
 
-        CustomGuiColorPicker colorPicker = (CustomGuiColorPicker) element;
+        GuiColorPicker colorPicker = (GuiColorPicker) element;
 
         if (key.equals("Color"))
         {
@@ -60,7 +60,7 @@ public class UIColorPickerComponent extends UIComponent {
     @SideOnly(Side.CLIENT)
     public GuiElement create(Minecraft mc, UIContext context)
     {
-        CustomGuiColorPicker element = new CustomGuiColorPicker(mc, (color) -> {
+        GuiColorPicker element = new GuiColorPicker(mc, (color) -> {
             if(!this.id.isEmpty()) {
                 context.data.setInteger(this.id, color);
                 context.data.setBoolean(this.id + ".alpha", this.alpha);
