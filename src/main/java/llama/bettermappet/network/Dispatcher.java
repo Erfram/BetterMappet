@@ -23,6 +23,10 @@ public class Dispatcher {
         DISPATCHER.sendTo(message, player);
     }
 
+    public static void sendToAll(IMessage message) {
+        DISPATCHER.sendToAll(message);
+    }
+
     public static void sendToServer(IMessage message) {
         DISPATCHER.sendToServer(message);
     }

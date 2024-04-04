@@ -5,6 +5,7 @@ import llama.bettermappet.capabilities.CapabilitiesType;
 import llama.bettermappet.capabilities.camera.Camera;
 import llama.bettermappet.capabilities.hand.Hand;
 import llama.bettermappet.capabilities.hud.Hud;
+import llama.bettermappet.capabilities.skin.Skin;
 import mchorse.mclib.network.ClientMessageHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -43,16 +44,20 @@ public class PacketCapability implements IMessage {
         @SideOnly(Side.CLIENT)
         public void run(EntityPlayerSP entityPlayerSP, PacketCapability message) {
             CapabilitiesType type = message.type;
+            EntityPlayerSP player = Minecraft.getMinecraft().player;
 
             switch (type){
                 case CAMERA:
-                    Camera.get(Minecraft.getMinecraft().player).deserializeNBT(message.profile);
+                    Camera.get(player).deserializeNBT(message.profile);
                     break;
                 case HAND:
-                    Hand.get(Minecraft.getMinecraft().player).deserializeNBT(message.profile);
+                    Hand.get(player).deserializeNBT(message.profile);
                     break;
                 case HUD:
-                    Hud.get(Minecraft.getMinecraft().player).deserializeNBT(message.profile);
+                    Hud.get(player).deserializeNBT(message.profile);
+                    break;
+                case SKIN:
+                    Skin.get(player).deserializeNBT(message.profile);
                     break;
             }
         }

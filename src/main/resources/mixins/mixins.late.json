@@ -1,10 +1,9 @@
 {
   "required": true,
   "compatibilityLevel": "JAVA_8",
-  "package": "llama.bettermappet.mixins",
+  "package": "llama.bettermappet.mixins.late",
   "refmap": "mixins.bettermappet.refmap.json",
-  "priority": 1,
-  "mixinPriority": 100,
+  "mixinPriority": 1000,
   "mixins": [
     "scripts.code.MixinMappetUIBuilder",
     "scripts.code.MixinScriptEntity",

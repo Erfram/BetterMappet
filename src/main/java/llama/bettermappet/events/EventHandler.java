@@ -13,6 +13,9 @@ import llama.bettermappet.capabilities.hand.IHand;
 import llama.bettermappet.capabilities.hud.Hud;
 import llama.bettermappet.capabilities.hud.HudProvider;
 import llama.bettermappet.capabilities.hud.IHud;
+import llama.bettermappet.capabilities.skin.ISkin;
+import llama.bettermappet.capabilities.skin.Skin;
+import llama.bettermappet.capabilities.skin.SkinProvider;
 import llama.bettermappet.network.Dispatcher;
 import llama.bettermappet.client.network.packets.PacketCapability;
 import llama.bettermappet.network.packets.PacketEvent;
@@ -39,6 +42,7 @@ public class EventHandler {
     public static final ResourceLocation CAMERA = new ResourceLocation(BetterMappet.MOD_ID, "camera");
     public static final ResourceLocation HAND = new ResourceLocation(BetterMappet.MOD_ID, "hand");
     public static final ResourceLocation HUD = new ResourceLocation(BetterMappet.MOD_ID, "hud");
+    public static final ResourceLocation SKIN = new ResourceLocation(BetterMappet.MOD_ID, "skin");
 
     @SubscribeEvent
     public void attachCapabilities(AttachCapabilitiesEvent<Entity> event) {
@@ -46,6 +50,7 @@ public class EventHandler {
             event.addCapability(CAMERA, new CameraProvider());
             event.addCapability(HAND, new HandProvider());
             event.addCapability(HUD, new HudProvider());
+            event.addCapability(SKIN, new SkinProvider());
         }
     }
 
@@ -56,10 +61,12 @@ public class EventHandler {
         final ICamera camera = Camera.get(player);
         final IHand hand = Hand.get(player);
         final IHud hud = Hud.get(player);
+        final ISkin skin = Skin.get(player);
 
         Dispatcher.sendTo(new PacketCapability(camera.serializeNBT(), CapabilitiesType.CAMERA), (EntityPlayerMP) player);
         Dispatcher.sendTo(new PacketCapability(hand.serializeNBT(), CapabilitiesType.HAND), (EntityPlayerMP) player);
         Dispatcher.sendTo(new PacketCapability(hud.serializeNBT(), CapabilitiesType.HUD), (EntityPlayerMP) player);
+        Dispatcher.sendTo(new PacketCapability(skin.serializeNBT(), CapabilitiesType.SKIN), (EntityPlayerMP) player);
     }
 
     @SubscribeEvent

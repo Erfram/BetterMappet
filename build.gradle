@@ -32,6 +32,7 @@ if (project.hasProperty("dev")) {
 }
 
 mixin {
+    add sourceSets.main, "mixins.bettermappet.refmap.json"
     disableAnnotationProcessorCheck()
 }
 
@@ -42,6 +43,7 @@ def mixins = new ArrayList<>(Arrays.asList(
 ))
 
 def mixinFiles = new ArrayList<>(Arrays.asList(
+    'mixins/mixins.early.json',
     'mixins/mixins.late.json'
 ))
 
@@ -111,7 +113,7 @@ dependencies {
     annotationProcessor 'org.ow2.asm:asm-debug-all:5.2'
     annotationProcessor 'com.google.guava:guava:24.1.1-jre'
     annotationProcessor 'com.google.code.gson:gson:2.8.7'
-    annotationProcessor (mixin) {
+    annotationProcessor (mixin+":processor") {
         transitive = false
     }
 
@@ -137,6 +139,8 @@ dependencies {
 
 // Example for how to get properties into the manifest for reading by the runtime...
 
+import java.util.stream.Collectors
+
 jar {
     manifest {
         attributes([
@@ -144,6 +148,7 @@ jar {
                 "Implementation-Version"     : project.version,
                 "Implementation-Timestamp"   : new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
                 "TweakClass"                 : "org.spongepowered.asm.launch.MixinTweaker",
+                "MixinConfigs"               : mixinFiles.stream().collect(Collectors.joining(',')),
                 "FMLCorePluginContainsFMLMod": true,  // Не забываем указать эти два флага,
                 "ForceLoadAsMod"             : true, // чтобы Forge нормально загрузил и мод, и миксины
         ])
@@ -169,6 +174,12 @@ task prepareAssets(type: Copy) {
     }
 
     into project.file('build/classes/java/main')
+}
+
+shadowJar {
+    dependencies {
+    }
+    archiveClassifier.set("")
 }
 
 classes.dependsOn(prepareAssets)
@@ -205,12 +216,12 @@ import org.gradle.internal.jvm.Jvm
 task scriptingJavadocsJson(type: Exec) {
     executable Os.isFamily(Os.FAMILY_WINDOWS) ? "javadoc" : "${Jvm.current().getJavaHome()}/bin/javadoc"
     List<String> subpackages = new ArrayList(Arrays.asList(
-            "llama.bettermappet.mixins.scripts.code",
+            "llama.bettermappet.mixins.late.scripts.code",
             "llama.bettermappet.api.scripts.user"
     ))
     List<String> excluded = new ArrayList(Arrays.asList(
-            "llama.bettermappet.mixins.client",
-            "llama.bettermappet.mixins.utils"
+            "llama.bettermappet.mixins.late.client",
+            "llama.bettermappet.mixins.late.utils",
     ))
     args "-doclet", "mchorse.utils.doclets.JsonDoclet", "-docletpath", "./run/jsonDoclet.jar", "-sourcepath", "./src/main/java",
             "-subpackages", subpackages.join(":"),

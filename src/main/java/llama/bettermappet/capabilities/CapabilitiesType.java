@@ -1,5 +1,5 @@
 package llama.bettermappet.capabilities;
 
 public enum CapabilitiesType {
-    CAMERA, HAND, HUD;
+    CAMERA, HAND, HUD, SKIN;
 }

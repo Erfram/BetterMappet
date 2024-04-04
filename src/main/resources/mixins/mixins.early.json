@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "compatibilityLevel": "JAVA_8",
+  "package": "llama.bettermappet.mixins.early",
+  "refmap": "mixins.bettermappet.refmap.json",
+  "priority": 1,
+  "mixinPriority": 100,
+  "mixins": [
+  ],
+  "client": [
+    "utils.MixinAbstractClientPlayer"
+  ],
+  "server": [
+  ]
+}

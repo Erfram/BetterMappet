@@ -10,6 +10,7 @@ import llama.bettermappet.utils.EventType;
 import mchorse.mappet.api.scripts.user.data.ScriptVector;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
@@ -78,9 +79,11 @@ public class ClientEventHandler {
 
         event.setCanceled(canceled);
 
-        if (!canceled && (event.getType() != RenderGameOverlayEvent.ElementType.HOTBAR && event.getType() != RenderGameOverlayEvent.ElementType.ALL)) {
+        //if (!canceled && (event.getType() != RenderGameOverlayEvent.ElementType.HOTBAR && event.getType() != RenderGameOverlayEvent.ElementType.ALL)) {
+        if (!canceled && event.getType() != RenderGameOverlayEvent.ElementType.ALL) {
             if (!(pos.x == 0 && pos.y == 0 && pos.z == 0 && rotate.angle == 0 && rotate.x == 0 && rotate.y == 0 && rotate.z == 0 && scale.x == 1 && scale.y == 1 && scale.z == 0)) {
-                GL11.glPushMatrix();
+                RenderHelper.enableGUIStandardItemLighting();
+                GlStateManager.pushMatrix();
                 GL11.glRotated(rotate.angle, rotate.x, rotate.y, rotate.z);
                 GL11.glScaled(scale.x, scale.y, scale.z);
                 GL11.glTranslated(pos.x, pos.y, pos.z);
@@ -102,8 +105,11 @@ public class ClientEventHandler {
         ScriptVector scale = hud.getScale();
         ScriptVector pos = hud.getPosition();
         ScriptVectorAngle rotate = hud.getRotate();
-        if (!event.isCanceled() && (event.getType() != RenderGameOverlayEvent.ElementType.HOTBAR && event.getType() != RenderGameOverlayEvent.ElementType.ALL))
-            if(!(pos.x == 0 && pos.y == 0 && pos.z == 0 && rotate.angle == 0 && rotate.x == 0 && rotate.y == 0 && rotate.z == 0 && scale.x == 1 && scale.y == 1 && scale.z == 0))
-                GL11.glPopMatrix();
+        //if (!event.isCanceled() && (event.getType() != RenderGameOverlayEvent.ElementType.HOTBAR && event.getType() != RenderGameOverlayEvent.ElementType.ALL)) {
+        if (!event.isCanceled() && event.getType() != RenderGameOverlayEvent.ElementType.ALL) {
+            if(!(pos.x == 0 && pos.y == 0 && pos.z == 0 && rotate.angle == 0 && rotate.x == 0 && rotate.y == 0 && rotate.z == 0 && scale.x == 1 && scale.y == 1 && scale.z == 0)) {
+                GlStateManager.popMatrix();
+            }
+        }
     }
 }

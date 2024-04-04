@@ -9,6 +9,9 @@ import llama.bettermappet.capabilities.hand.IHand;
 import llama.bettermappet.capabilities.hud.Hud;
 import llama.bettermappet.capabilities.hud.HudStorage;
 import llama.bettermappet.capabilities.hud.IHud;
+import llama.bettermappet.capabilities.skin.ISkin;
+import llama.bettermappet.capabilities.skin.Skin;
+import llama.bettermappet.capabilities.skin.SkinStorage;
 import llama.bettermappet.events.ClientEventHandler;
 import llama.bettermappet.events.EventHandler;
 import llama.bettermappet.events.EventTriggerHandler;
@@ -45,6 +48,7 @@ public class CommonProxy {
         CapabilityManager.INSTANCE.register(ICamera.class, new CameraStorage(), Camera::new);
         CapabilityManager.INSTANCE.register(IHand.class, new HandStorage(), Hand::new);
         CapabilityManager.INSTANCE.register(IHud.class, new HudStorage(), Hud::new);
+        CapabilityManager.INSTANCE.register(ISkin.class, new SkinStorage(), Skin::new);
     }
 
     public void init(FMLInitializationEvent event) {
