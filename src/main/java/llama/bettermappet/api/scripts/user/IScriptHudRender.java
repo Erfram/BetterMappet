@@ -80,4 +80,10 @@ public interface IScriptHudRender {
      * Resets the hud of the camera to its default value.
      */
     void resetPosition();
+
+    void rotateTo(String interpolation, int durationTicks, float angle, float x, float y, float z);
+
+    void moveTo(String interpolation, int durationTicks, float x, float y);
+
+    void scaledTo(String interpolation, int durationTicks, float x, float y);
 }

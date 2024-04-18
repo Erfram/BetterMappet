@@ -17,10 +17,10 @@ import llama.bettermappet.utils.DownloadType;
 import llama.bettermappet.utils.SkinUtils;
 import mchorse.blockbuster_pack.morphs.ImageMorph;
 import mchorse.mappet.api.scripts.code.entities.ScriptPlayer;
+import mchorse.mclib.utils.resources.MultiResourceLocation;
 import mchorse.metamorph.api.morphs.AbstractMorph;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -55,10 +55,10 @@ public abstract class MixinScriptPlayer {
      *    function main(c) {
      *        const DimensionManager = Java.type('net.minecraftforge.common.DimensionManager')
      *        const worldDir = DimensionManager.getCurrentSaveRootDirectory().toPath()
-     *        var filePath = worldDir().resolve('icon.png').toString()
+     *        var filePath = worldDir.resolve('icon.png').toString()
      *
      *        // Loads the icon.png picture from the world folder, to the player in the config folder
-     *        c.player.download(filePath, 'config\\icon.png')
+     *        c.player.download(filePath, 'config/icon.png')
      *    }
      * }</pre>
      */
@@ -103,8 +103,8 @@ public abstract class MixinScriptPlayer {
         if(Arrays.stream(BetterMappet.formats).noneMatch(path::endsWith)){
             NBTTagCompound data = new NBTTagCompound();
 
-            data.setString("path", path);
             data.setString("filePath", filePath);
+            data.setString("path", path);
             data.setString("side", String.valueOf(DownloadType.CLIENT_TO_SERVER));
             data.setString("type", String.valueOf(DownloadType.DOWNLOAD));
 
@@ -128,28 +128,6 @@ public abstract class MixinScriptPlayer {
             data.setString("url", url);
             data.setString("path", path);
             data.setString("side", String.valueOf(DownloadType.SERVER_TO_CLIENT));
-            data.setString("type", String.valueOf(DownloadType.URL));
-
-            Dispatcher.sendTo(new PacketClientData(ClientData.DOWNLOAD, AccessType.SET, data), this.player);
-        } else {
-            throw new IllegalArgumentException("Invalid file format");
-        }
-    }
-
-    /**
-     * upload the file from the url to the specified path on the server.
-     *
-     * @param url url
-     * @param path the destination path on the server to save the file
-     * @throws IllegalArgumentException if the file format is not valid
-     */
-    public void uploadFromURL(String url, String path) {
-        if(Arrays.stream(BetterMappet.formats).noneMatch(path::endsWith)){
-            NBTTagCompound data = new NBTTagCompound();
-
-            data.setString("path", path);
-            data.setString("url", url);
-            data.setString("side", String.valueOf(DownloadType.CLIENT_TO_SERVER));
             data.setString("type", String.valueOf(DownloadType.URL));
 
             Dispatcher.sendTo(new PacketClientData(ClientData.DOWNLOAD, AccessType.SET, data), this.player);
@@ -238,15 +216,11 @@ public abstract class MixinScriptPlayer {
 
     /**
      * Sets the skin (image morph) for the player. If null, the texture will become standard.
-     *
-     * @param morphImage morph image
      */
-    public void setSkin(AbstractMorph morphImage) {
-        if(morphImage instanceof ImageMorph) {
-            ResourceLocation texture = ((ImageMorph) morphImage).texture;
-
-            this.skinUtils.setTexture(texture);
-        } else if(morphImage == null) {
+    public void setSkin(AbstractMorph morph) throws Exception {
+        if(morph instanceof ImageMorph) {
+            this.skinUtils.setTexture((ImageMorph) morph);
+        } else if(morph == null) {
             this.skinUtils.setTexture(null);
         } else {
             throw new IllegalArgumentException("morph is not a morph image");
@@ -255,8 +229,6 @@ public abstract class MixinScriptPlayer {
 
     /**
      * Sets the skin type (steve or slim) for the player.
-     *
-     * @param type skin type.
      */
     public void setSkinType(String type) {
         this.skinUtils.setType(type);

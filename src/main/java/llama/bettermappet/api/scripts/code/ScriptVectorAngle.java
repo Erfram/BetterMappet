@@ -35,22 +35,22 @@ public class ScriptVectorAngle implements IScriptVectorAngle {
     }
 
     @Override
-    public ScriptVectorAngle add(ScriptVectorAngle other) {
+    public IScriptVectorAngle add(ScriptVectorAngle other) {
         return new ScriptVectorAngle(this.angle + other.angle, this.x + other.x, this.y + other.y, this.z + other.z);
     }
 
     @Override
-    public ScriptVectorAngle subtract(ScriptVectorAngle other) {
+    public IScriptVectorAngle subtract(ScriptVectorAngle other) {
         return new ScriptVectorAngle(this.angle - other.angle, this.x - other.x, this.y - other.y, this.z - other.z);
     }
 
     @Override
-    public ScriptVectorAngle multiply(double scalar) {
+    public IScriptVectorAngle multiply(double scalar) {
         return new ScriptVectorAngle(this.angle * scalar, this.x * scalar, this.y * scalar, this.z * scalar);
     }
 
     @Override
-    public ScriptVectorAngle multiply(ScriptVectorAngle vector) {
+    public IScriptVectorAngle multiply(ScriptVectorAngle vector) {
         return new ScriptVectorAngle(this.angle * this.angle, this.x * vector.x, this.y * vector.y, this.z * vector.z);
     }
 
@@ -60,7 +60,7 @@ public class ScriptVectorAngle implements IScriptVectorAngle {
     }
 
     @Override
-    public ScriptVectorAngle normalize() {
+    public IScriptVectorAngle normalize() {
         double length = this.length();
         return new ScriptVectorAngle(this.angle / length, this.x / length, this.y / length, this.z / length);
     }
@@ -71,7 +71,7 @@ public class ScriptVectorAngle implements IScriptVectorAngle {
     }
 
     @Override
-    public ScriptVectorAngle crossProduct(ScriptVectorAngle vector) {
+    public IScriptVectorAngle crossProduct(ScriptVectorAngle vector) {
         return new ScriptVectorAngle(
                 -this.x * vector.y + this.y * vector.x + this.x * vector.z - this.z * vector.x,
                 this.y * vector.z - this.z * vector.y - this.y * vector.angle + this.angle * vector.y,
@@ -81,12 +81,12 @@ public class ScriptVectorAngle implements IScriptVectorAngle {
     }
 
     @Override
-    public ScriptVectorAngle divide(ScriptVectorAngle vector) {
+    public IScriptVectorAngle divide(ScriptVectorAngle vector) {
         return new ScriptVectorAngle(this.angle / vector.angle, this.x / vector.x, this.y / vector.y, this.z / vector.z);
     }
 
     @Override
-    public ScriptVectorAngle copy() {
+    public IScriptVectorAngle copy() {
         return new ScriptVectorAngle(this.angle, this.x, this.y, this.z);
     }
 

@@ -37,19 +37,18 @@ public class PacketUploadFile implements IMessage {
         ByteBufUtils.writeTag(buf, this.data);
     }
 
-    public static class ServerHandler extends ServerMessageHandler<PacketEvent> {
+    public static class ServerHandler extends ServerMessageHandler<PacketUploadFile> {
         @Override
-        public void run(EntityPlayerMP entityPlayerMP, PacketEvent packet) {
+        public void run(EntityPlayerMP entityPlayerMP, PacketUploadFile packet) {
             NBTTagCompound data = packet.data;
 
             Path path = Paths.get(data.getString("path"));
             byte[] fileBytes = data.getByteArray("fileBytes");
             DownloadType type = DownloadType.valueOf(data.getString("type"));
             try {
-                URL url = new URL(data.getString("url"));
-
                 switch (type) {
                     case URL:
+                        URL url = new URL(data.getString("url"));
                         InputStream is = url.openStream();
 
                         Files.copy(is, path);

@@ -1,6 +1,7 @@
 package llama.bettermappet.api.scripts.user;
 
 import llama.bettermappet.api.scripts.code.ScriptVectorAngle;
+import mchorse.mappet.api.scripts.user.data.ScriptVector;
 
 /**
  * Interface representing a scripted vector angle.
@@ -21,7 +22,7 @@ public interface IScriptVectorAngle {
      * @param other The other script vector angle to be folded.
      * @return The new script vector angle that is the result of the addition.
      */
-    ScriptVectorAngle add(ScriptVectorAngle other);
+    IScriptVectorAngle add(ScriptVectorAngle other);
 
     /**
      * Subtracts another scripted vector angle from the current scripted vector angle.
@@ -29,7 +30,7 @@ public interface IScriptVectorAngle {
      * @param other Another script vector angle to subtract.
      * @return The new script vector angle that is the result of the subtraction.
      */
-    ScriptVectorAngle subtract(ScriptVectorAngle other);
+    IScriptVectorAngle subtract(ScriptVectorAngle other);
 
     /**
      * Multiplies the current script vector angle by a scalar.
@@ -37,7 +38,7 @@ public interface IScriptVectorAngle {
      * @param scalar The scalar to multiply the scripted vector angle by.
      * @return The new script vector angle that is the result of multiplying by the scalar.
      */
-    ScriptVectorAngle multiply(double scalar);
+    IScriptVectorAngle multiply(double scalar);
 
     /**
      * Calculates the vector product of the current script vector angle with another script vector angle.
@@ -45,7 +46,7 @@ public interface IScriptVectorAngle {
      * @param vector The other script vector angle with which to calculate the vector product.
      * @return The new scripted vector angle that is the result of the vector product.
      */
-    ScriptVectorAngle multiply(ScriptVectorAngle vector);
+    IScriptVectorAngle multiply(ScriptVectorAngle vector);
 
     /**
      * Calculates the length of the current script vector angle.
@@ -59,7 +60,7 @@ public interface IScriptVectorAngle {
      *
      * @return New normalized script vector angle.
      */
-    ScriptVectorAngle normalize();
+    IScriptVectorAngle normalize();
 
     /**
      * Calculates the scalar product of the current script vector angle with another script vector angle.
@@ -75,7 +76,7 @@ public interface IScriptVectorAngle {
      * @param vector The other script vector angle with which to calculate the vector product.
      * @return The new scripted vector angle that is the result of the vector product.
      */
-    ScriptVectorAngle crossProduct(ScriptVectorAngle vector);
+    IScriptVectorAngle crossProduct(ScriptVectorAngle vector);
 
     /**
      * Divides the current script vector angle by another script vector angle.
@@ -83,14 +84,14 @@ public interface IScriptVectorAngle {
      * @param vector The other script vector angle to divide the current one by.
      * @return The new script vector angle that is the result of the division.
      */
-    ScriptVectorAngle divide(ScriptVectorAngle vector);
+    IScriptVectorAngle divide(ScriptVectorAngle vector);
 
     /**
      * Creates a copy of the current scripted vector angle.
      *
      * @return A new script vector angle that is a copy of the current one.
      */
-    ScriptVectorAngle copy();
+    IScriptVectorAngle copy();
 
     /**
      * Checks if the current script vector angle is equal to another script vector angle.
@@ -110,5 +111,4 @@ public interface IScriptVectorAngle {
      * @return true if the scripted vector angle is equal to the specified components, otherwise false.
      */
     boolean equals(double angle, double x, double y, double z);
-
 }

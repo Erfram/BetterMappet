@@ -3,9 +3,9 @@ package llama.bettermappet.api.scripts.code;
 import llama.bettermappet.api.scripts.user.IScriptMatrix;
 
 public class ScriptMatrix implements IScriptMatrix {
-    private Double[][] data;
-    private int rows;
-    private int cols;
+    private final Double[][] data;
+    private final int rows;
+    private final int cols;
 
     public ScriptMatrix(int rows, int cols) {
         this.rows = rows;

@@ -115,4 +115,8 @@ public interface IScriptHandRender {
      * Resets the position of the hand to its default value.
      */
     void resetPosition();
+
+    void rotateTo(String interpolation, int durationTicks, float angle, float x, float y, float z);
+
+    void moveTo(String interpolation, int durationTicks, float x, float y, float z);
 }

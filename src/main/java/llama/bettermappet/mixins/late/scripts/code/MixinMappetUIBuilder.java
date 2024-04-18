@@ -58,7 +58,7 @@ public abstract class MixinMappetUIBuilder {
     }
 
     /**
-     * Creates a color picker ui component that supports code highlighting, etc.
+     * Creates a color picker ui component.
      *
      * <pre>{@code
      *     function main(c) {
@@ -75,6 +75,28 @@ public abstract class MixinMappetUIBuilder {
 
         this.getCurrent().getChildComponents().add(component);
         component.color(color);
+
+        return component;
+    }
+
+    /**
+     * Creates a color picker ui component.
+     *
+     * <pre>{@code
+     *     function main(c) {
+     *         const ui = mappet.createUI(c, "handler")
+     *
+     *         ui.colorPicker().rwh(0.25, 0.25).rxy(0.5, 0.5).anchor(0.5)
+     *
+     *         c.player.openUI(ui)
+     *     }
+     * }</pre>
+     */
+    public UIColorPickerComponent colorPicker() {
+        UIColorPickerComponent component = new UIColorPickerComponent();
+
+        this.getCurrent().getChildComponents().add(component);
+        component.color(0x000000);
 
         return component;
     }

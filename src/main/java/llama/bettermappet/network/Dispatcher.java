@@ -4,6 +4,7 @@ import llama.bettermappet.BetterMappet;
 import llama.bettermappet.client.network.packets.PacketCapability;
 import llama.bettermappet.client.network.packets.PacketClientData;
 import llama.bettermappet.network.packets.PacketEvent;
+import llama.bettermappet.network.packets.PacketUploadFile;
 import mchorse.mclib.network.AbstractDispatcher;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -14,6 +15,7 @@ public class Dispatcher {
         public void register() {
             this.register(PacketClientData.class, PacketClientData.ServerHandler.class, Side.SERVER);
             this.register(PacketEvent.class, PacketEvent.ServerHandler.class, Side.SERVER);
+            this.register(PacketUploadFile.class, PacketUploadFile.ServerHandler.class, Side.SERVER);
             this.register(PacketClientData.class, PacketClientData.ClientHandler.class, Side.CLIENT);
             this.register(PacketCapability.class, PacketCapability.ClientHandler.class, Side.CLIENT);
         }

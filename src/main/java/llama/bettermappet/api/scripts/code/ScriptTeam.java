@@ -8,16 +8,13 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextFormatting;
 
 public class ScriptTeam implements IScriptTeam {
-    private EntityPlayerMP player;
-    private ScorePlayerTeam scorePlayerTeam;
+    private final ScorePlayerTeam scorePlayerTeam;
 
     public ScriptTeam(EntityPlayerMP player) {
-        this.player = player;
         this.scorePlayerTeam = player.getWorldScoreboard().getTeam(player.getTeam().getName());
     }
 
     public ScriptTeam(MinecraftServer server, String team) {
-        this.player = null;
         this.scorePlayerTeam = server.getWorld(0).getScoreboard().getTeam(team);
     }
 

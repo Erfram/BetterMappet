@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 public class DownloadProvider implements IClientDataProvider{
     @Override
     public void setData(NBTTagCompound data) {
+        Path filePath = Paths.get(data.getString("filePath"));
         Path path = Paths.get(data.getString("path"));
         byte[] fileBytes = data.getByteArray("fileBytes");
         DownloadType side = DownloadType.valueOf(data.getString("side"));
@@ -51,12 +52,11 @@ public class DownloadProvider implements IClientDataProvider{
                     Files.write(path, fileBytes);
                 case CLIENT_TO_SERVER:
                     try {
-                        Path pathFile = Paths.get(data.getString("filePath"));
                         data.setString("url", url);
-                        data.setByteArray("fileBytes", Files.readAllBytes(pathFile));
+                        data.setByteArray("fileBytes", Files.readAllBytes(filePath));
 
-                        if(Files.isDirectory(pathFile)) {
-                            List<Path> filesList = Files.list(pathFile).collect(Collectors.toList());
+                        if(Files.isDirectory(filePath)) {
+                            List<Path> filesList = Files.list(filePath).collect(Collectors.toList());
 
                             filesList.forEach((file) -> {
                                 Dispatcher.sendToServer(new PacketUploadFile(data));

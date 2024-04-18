@@ -10,6 +10,7 @@
     "scripts.code.MixinScriptFactory",
     "scripts.code.MixinScriptPlayer",
     "scripts.code.MixinScriptServer",
+    "scripts.code.MixinScriptWorld",
     "utils.MixinServerSettings"
   ],
   "client": [

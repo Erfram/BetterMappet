@@ -5,13 +5,16 @@ import llama.bettermappet.capabilities.CapabilitiesType;
 import llama.bettermappet.capabilities.hud.Hud;
 import llama.bettermappet.network.Dispatcher;
 import llama.bettermappet.client.network.packets.PacketCapability;
+import mchorse.mappet.CommonProxy;
 import mchorse.mappet.api.scripts.user.data.ScriptVector;
+import mchorse.mappet.utils.RunnableExecutionFork;
+import mchorse.mclib.utils.Interpolation;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 public class ScriptHudRender implements IScriptHudRender {
     private final EntityPlayerMP player;
     private final Hud hud;
-    private String name;
+    private final String name;
     public ScriptHudRender(EntityPlayerMP player, String name) {
         this.player = player;
         this.hud = Hud.get(player);
@@ -88,6 +91,55 @@ public class ScriptHudRender implements IScriptHudRender {
     @Override
     public void resetPosition() {
         this.setPosition(0, 0);
+    }
+
+    @Override
+    public void rotateTo(String interpolation, int durationTicks, float angle, float x, float y, float z) {
+        Interpolation interp = Interpolation.valueOf(interpolation.toUpperCase());
+        float startAngle = (float) this.getRotate().angle;
+        float startX = (float) this.getRotate().x;
+        float startY = (float) this.getRotate().y;
+        float startZ = (float) this.getRotate().z;
+
+        for (int i = 0; i < durationTicks; i++) {
+            float progress = (float) i / (float) durationTicks;
+            float interpAngle = interp.interpolate(startAngle, angle, progress);
+            float interpX = interp.interpolate(startX, x, progress);
+            float interpY = interp.interpolate(startY, y, progress);
+            float interpZ = interp.interpolate(startZ, z, progress);
+
+            CommonProxy.eventHandler.addExecutable(new RunnableExecutionFork(i, () -> this.setRotate(interpAngle, interpX, interpY, interpZ)));
+        }
+    }
+
+    @Override
+    public void moveTo(String interpolation, int durationTicks, float x, float y) {
+        Interpolation interp = Interpolation.valueOf(interpolation.toUpperCase());
+        float startX = (float) this.getPosition().x;
+        float startY = (float) this.getPosition().y;
+
+        for (int i = 0; i < durationTicks; i++) {
+            float progress = (float) i / (float) durationTicks;
+            float interpX = interp.interpolate(startX, x, progress);
+            float interpY = interp.interpolate(startY, y, progress);
+
+            CommonProxy.eventHandler.addExecutable(new RunnableExecutionFork(i, () -> this.setPosition(interpX, interpY)));
+        }
+    }
+
+    @Override
+    public void scaledTo(String interpolation, int durationTicks, float x, float y) {
+        Interpolation interp = Interpolation.valueOf(interpolation.toUpperCase());
+        float startX = (float) this.getScale().x;
+        float startY = (float) this.getScale().y;
+
+        for (int i = 0; i < durationTicks; i++) {
+            float progress = (float) i / (float) durationTicks;
+            float interpX = interp.interpolate(startX, x, progress);
+            float interpY = interp.interpolate(startY, y, progress);
+
+            CommonProxy.eventHandler.addExecutable(new RunnableExecutionFork(i, () -> this.setScale(interpX, interpY)));
+        }
     }
 
     private void sendToCapability(){
