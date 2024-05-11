@@ -70,21 +70,6 @@ public class EventHandler {
     }
 
     @SubscribeEvent
-    public void mouseEvent(MouseEvent event) {
-        NBTTagCompound data = new NBTTagCompound();
-
-        data.setInteger("button", event.getButton());
-        data.setInteger("x", event.getX());
-        data.setInteger("y", event.getY());
-        data.setInteger("dwheel", event.getDwheel());
-        data.setInteger("dx", event.getDx());
-        data.setInteger("dy", event.getDy());
-        data.setBoolean("buttonState", event.isButtonstate());
-
-        Dispatcher.sendToServer(new PacketEvent(EventType.MOUSE, data));
-    }
-
-    @SubscribeEvent
     public void keyInputEvent(InputEvent.KeyInputEvent event) {
         NBTTagCompound data = new NBTTagCompound();
 

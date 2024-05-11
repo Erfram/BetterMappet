@@ -13,11 +13,15 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
+import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderSpecificHandEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 public class ClientEventHandler {
     @SubscribeEvent
@@ -68,8 +72,9 @@ public class ClientEventHandler {
     }
 
     @SubscribeEvent
-    public void renderGuiPre(RenderGameOverlayEvent.Pre event) {
-        Hud hud = Hud.get(Minecraft.getMinecraft().player);
+    public void renderHudPre(RenderGameOverlayEvent.Pre event) {
+        Minecraft mc = Minecraft.getMinecraft();
+        Hud hud = Hud.get(mc.player);
 
         hud.setName(event.getType().name());
         boolean canceled = hud.isCanceled();
@@ -79,11 +84,11 @@ public class ClientEventHandler {
 
         event.setCanceled(canceled);
 
-        //if (!canceled && (event.getType() != RenderGameOverlayEvent.ElementType.HOTBAR && event.getType() != RenderGameOverlayEvent.ElementType.ALL)) {
         if (!canceled && event.getType() != RenderGameOverlayEvent.ElementType.ALL) {
-            if (!(pos.x == 0 && pos.y == 0 && pos.z == 0 && rotate.angle == 0 && rotate.x == 0 && rotate.y == 0 && rotate.z == 0 && scale.x == 1 && scale.y == 1 && scale.z == 0)) {
-                RenderHelper.enableGUIStandardItemLighting();
+            if (this.isDefaultHud(hud)) {
+                RenderHelper.enableStandardItemLighting();
                 GlStateManager.pushMatrix();
+                RenderHelper.enableStandardItemLighting();
                 GL11.glRotated(rotate.angle, rotate.x, rotate.y, rotate.z);
                 GL11.glScaled(scale.x, scale.y, scale.z);
                 GL11.glTranslated(pos.x, pos.y, pos.z);
@@ -102,14 +107,34 @@ public class ClientEventHandler {
         Hud hud = Hud.get(Minecraft.getMinecraft().player);
 
         hud.setName(event.getType().name());
+        if (!event.isCanceled() && event.getType() != RenderGameOverlayEvent.ElementType.ALL) {
+            if(this.isDefaultHud(hud)) {
+                RenderHelper.disableStandardItemLighting();
+                GlStateManager.popMatrix();
+                RenderHelper.disableStandardItemLighting();
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void mouseEvent(MouseEvent event) {
+        NBTTagCompound data = new NBTTagCompound();
+
+        data.setInteger("button", event.getButton());
+        data.setInteger("x", event.getX());
+        data.setInteger("y", event.getY());
+        data.setInteger("dwheel", event.getDwheel());
+        data.setInteger("dx", event.getDx());
+        data.setInteger("dy", event.getDy());
+        data.setBoolean("buttonState", event.isButtonstate());
+
+        Dispatcher.sendToServer(new PacketEvent(EventType.MOUSE, data));
+    }
+
+    private boolean isDefaultHud(Hud hud) {
         ScriptVector scale = hud.getScale();
         ScriptVector pos = hud.getPosition();
         ScriptVectorAngle rotate = hud.getRotate();
-        //if (!event.isCanceled() && (event.getType() != RenderGameOverlayEvent.ElementType.HOTBAR && event.getType() != RenderGameOverlayEvent.ElementType.ALL)) {
-        if (!event.isCanceled() && event.getType() != RenderGameOverlayEvent.ElementType.ALL) {
-            if(!(pos.x == 0 && pos.y == 0 && pos.z == 0 && rotate.angle == 0 && rotate.x == 0 && rotate.y == 0 && rotate.z == 0 && scale.x == 1 && scale.y == 1 && scale.z == 0)) {
-                GlStateManager.popMatrix();
-            }
-        }
+        return !(pos.x == 0 && pos.y == 0 && pos.z == 0 && rotate.angle == 0 && rotate.x == 0 && rotate.y == 0 && rotate.z == 0 && scale.x == 1 && scale.y == 1 && scale.z == 0);
     }
 }
